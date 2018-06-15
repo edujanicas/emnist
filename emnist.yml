@@ -1,0 +1,27 @@
+provider:
+  name: faas
+  gateway: http://146.179.131.181:31112
+
+functions:
+  emnist-setup:
+    lang: python3-debian
+    handler: ./emnist-setup
+    image: ejanicas/emnist-setup
+    environment:
+      combine_output: false
+      write_debug: true
+      gateway_hostname: 146.179.131.181
+      read_timeout: 60s
+      write_timeout: 60s
+      exec_timeout: 60s
+  emnist-train:
+    lang: python3-debian
+    handler: ./emnist-train
+    image: ejanicas/emnist-train
+    environment:
+      combine_output: false
+      write_debug: true
+      gateway_hostname: 146.179.131.181
+      read_timeout: 60s
+      write_timeout: 60s
+      exec_timeout: 60s
