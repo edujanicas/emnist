@@ -1,6 +1,7 @@
 import numpy as np
 import os
 import requests
+import time
 
 from pymemcache.client import base
 
@@ -33,6 +34,7 @@ def handle(req):
     client.set('weights_1_2', weights_1_2.tobytes())
 
     for worker_id in range(number_of_workers):
+        time.sleep(2)
         # set the variables to send to the first iteration of the training loop
         payload = {'alpha': alpha,
                    'iterations': iterations,

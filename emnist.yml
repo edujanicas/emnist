@@ -22,6 +22,6 @@ functions:
       combine_output: false
       write_debug: true
       gateway_hostname: 146.179.131.181
-      read_timeout: 60s
-      write_timeout: 60s
-      exec_timeout: 60s
+      read_timeout: 6000s
+      write_timeout: 6000s
+      exec_timeout: 6000s

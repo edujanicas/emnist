@@ -82,7 +82,7 @@ def handle(req):
     images = images[int((len(images) / number_of_workers) * worker_id):int((len(images) / number_of_workers) * (worker_id + 1) - 1)]
     labels = labels[int((len(labels) / number_of_workers) * worker_id):int((len(labels) / number_of_workers) * (worker_id + 1) - 1)]
 
-    if iterations > 0:
+    for i in range(iterations):
 
         correct_cnt = 0
 
@@ -119,35 +119,9 @@ def handle(req):
 
         sys.stderr.write(
              "\n" + \
-             "I:" + str(55 - iterations) + \
+             "I:" + str(i) + \
              " Test-Acc:" + str(test_correct_cnt / float(len(test_images))) + \
              " Train-Acc:" + str(correct_cnt / float(len(images))))
 
-        iterations -= 1
-        # set the variables to send to the first iteration of the training loop
-        payload = {'alpha': alpha,
-                   'iterations': iterations,
-                   'hidden_size': hidden_size,
-                   'pixels_per_image': pixels_per_image,
-                   'num_labels': num_labels,
-                   'batch_size': batch_size,
-                   'dropout_percent': dropout_percent,
-                   'number_of_workers': number_of_workers,
-                   'worker_id': worker_id
-                   }
-
-        # uses a default of "gateway" for when "gateway_hostname" is not set
-        gateway_hostname = os.getenv("gateway_hostname", "gateway")
-
         client.set('weights_0_1', weights_0_1.tobytes())
         client.set('weights_1_2', weights_1_2.tobytes())
-
-        # make the request to call the emnist-train function HACKY timeout
-        try:
-            requests.get(
-                "http://" + gateway_hostname + ":31112/function/emnist-train",
-                params=payload,
-                timeout=0.1
-            )
-        except requests.exceptions.ReadTimeout:
-            pass
