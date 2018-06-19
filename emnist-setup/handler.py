@@ -21,19 +21,10 @@ def handle(req):
     num_labels = 47
     batch_size = 100
     dropout_percent = 0.2
+    number_of_workers = 3
 
     weights_0_1 = 0.02 * np.random.random((pixels_per_image, hidden_size)) - 0.01
     weights_1_2 = 0.2 * np.random.random((hidden_size, num_labels)) - 0.1
-
-    # set the variables to send to the first iteration of the training loop
-    payload = {'alpha': alpha,
-               'iterations': iterations,
-               'hidden_size': hidden_size,
-               'pixels_per_image': pixels_per_image,
-               'num_labels': num_labels,
-               'batch_size': batch_size,
-               'dropout_percent':dropout_percent
-               }
 
     # uses a default of "gateway" for when "gateway_hostname" is not set
     gateway_hostname = os.getenv("gateway_hostname", "gateway")
@@ -41,12 +32,24 @@ def handle(req):
     client.set('weights_0_1', weights_0_1.tobytes())
     client.set('weights_1_2', weights_1_2.tobytes())
 
-    # make the request to call the emnist-train function HACKY timeout
-    try:
-        requests.get(
-            "http://" + gateway_hostname + ":31112/function/emnist-train",
-            params=payload,
-            timeout=0.1
-        )
-    except requests.exceptions.ReadTimeout:
-        pass
+    for worker_id in range(number_of_workers):
+        # set the variables to send to the first iteration of the training loop
+        payload = {'alpha': alpha,
+                   'iterations': iterations,
+                   'hidden_size': hidden_size,
+                   'pixels_per_image': pixels_per_image,
+                   'num_labels': num_labels,
+                   'batch_size': batch_size,
+                   'dropout_percent': dropout_percent,
+                   'number_of_workers': number_of_workers,
+                   'worker_id': worker_id
+                   }
+        # make the request to call the emnist-train function HACKY timeout
+        try:
+            requests.get(
+                "http://" + gateway_hostname + ":31112/function/emnist-train",
+                params=payload,
+                timeout=0.1
+            )
+        except requests.exceptions.ReadTimeout:
+            pass

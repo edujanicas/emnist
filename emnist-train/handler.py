@@ -25,7 +25,9 @@ def handle(req):
     Args:
         req (str): request body
     """
-    sys.stderr.write(str(os.environ))
+    # Print next line for debug only
+    # sys.stderr.write(str(os.environ))
+
     client = base.Client((os.getenv("MEMCACHED_SERVICE_HOST"), int(os.getenv("MEMCACHED_SERVICE_PORT"))))
     # get the query string from the http request
     qs = parse_qs(os.getenv("Http_Query"))
@@ -38,6 +40,8 @@ def handle(req):
     num_labels = int(qs["num_labels"][0])
     batch_size = int(qs["batch_size"][0])
     dropout_percent = float(qs["dropout_percent"][0])
+    number_of_workers = int(qs["number_of_workers"][0])
+    worker_id = int(qs["worker_id"][0])
 
     weights_0_1 = np.frombuffer(client.get('weights_0_1')).reshape(pixels_per_image, hidden_size)
     weights_1_2 = np.frombuffer(client.get('weights_1_2')).reshape(hidden_size, num_labels)
@@ -73,6 +77,10 @@ def handle(req):
     # labels should be onehot encoded
     labels = keras.utils.to_categorical(labels, 47)
     test_labels = keras.utils.to_categorical(test_labels, 47)
+
+    # crop the input
+    images = images[int((len(images) / number_of_workers) * worker_id):int((len(images) / number_of_workers) * (worker_id + 1) - 1)]
+    labels = labels[int((len(labels) / number_of_workers) * worker_id):int((len(labels) / number_of_workers) * (worker_id + 1) - 1)]
 
     if iterations > 0:
 
@@ -111,7 +119,7 @@ def handle(req):
 
         sys.stderr.write(
              "\n" + \
-             "I:" + str(60 - iterations) + \
+             "I:" + str(55 - iterations) + \
              " Test-Acc:" + str(test_correct_cnt / float(len(test_images))) + \
              " Train-Acc:" + str(correct_cnt / float(len(images))))
 
@@ -123,7 +131,9 @@ def handle(req):
                    'pixels_per_image': pixels_per_image,
                    'num_labels': num_labels,
                    'batch_size': batch_size,
-                   'dropout_percent': dropout_percent
+                   'dropout_percent': dropout_percent,
+                   'number_of_workers': number_of_workers,
+                   'worker_id': worker_id
                    }
 
         # uses a default of "gateway" for when "gateway_hostname" is not set
