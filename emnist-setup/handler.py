@@ -32,6 +32,7 @@ def handle(req):
 
     client.set('weights_0_1', weights_0_1.tobytes())
     client.set('weights_1_2', weights_1_2.tobytes())
+    client.set('updated', 0)
 
     for worker_id in range(number_of_workers):
         time.sleep(2)
