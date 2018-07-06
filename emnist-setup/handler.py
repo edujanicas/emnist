@@ -1,58 +1,61 @@
 import numpy as np
 import os
 import requests
-import time
 
 from pymemcache.client import base
+
 
 def handle(req):
     """handle a request to the function
     Args:
         req (str): request body
     """
+
+    # random seed set to 1 for debug purposes
     np.random.seed(1)
-    client = base.Client((os.getenv("MEMCACHED_SERVICE_HOST"), int(os.getenv("MEMCACHED_SERVICE_PORT"))))
 
-    ### 1. Initialize the Network's Weights and Data
+    # get a connection to the memcached database
+    client = base.Client((os.getenv("MEMCACHED_SERVICE_HOST"),
+                          int(os.getenv("MEMCACHED_SERVICE_PORT"))))
 
-    alpha = 0.1
-    iterations = 55
-    hidden_size = 100
-    pixels_per_image = 784
-    num_labels = 47
-    batch_size = 100
-    dropout_percent = 0.2
-    number_of_workers = 3
+    # 1. Initialize the Network's Weights and Data
+    # TODO: Switch values to become env vars
+    alpha = float(os.getenv("alpha"))
+    iterations = int(os.getenv("iterations"))
+    hidden_size = int(os.getenv("hidden_size"))
+    pixels_per_image = int(os.getenv("pixels_per_image"))
+    num_labels = int(os.getenv("num_labels"))
+    batch_size = int(os.getenv("batch_size"))
+    dropout_percent = float(os.getenv("dropout_percent"))
+    number_of_workers = int(os.getenv("number_of_workers"))
 
-    weights_0_1 = 0.02 * np.random.random((pixels_per_image, hidden_size)) - 0.01
+    weights_0_1 = 0.02 * np.random.random(
+        (pixels_per_image, hidden_size)) - 0.01
     weights_1_2 = 0.2 * np.random.random((hidden_size, num_labels)) - 0.1
-
-    # uses a default of "gateway" for when "gateway_hostname" is not set
-    gateway_hostname = os.getenv("gateway_hostname", "gateway")
 
     client.set('weights_0_1', weights_0_1.tobytes())
     client.set('weights_1_2', weights_1_2.tobytes())
     client.set('updated', 0)
+    client.set('alpha', alpha)
+    client.set('iterations', iterations)
+    client.set('hidden_size', hidden_size)
+    client.set('pixels_per_image', pixels_per_image)
+    client.set('num_labels', num_labels)
+    client.set('batch_size', batch_size)
+    client.set('dropout_percent', dropout_percent)
+    client.set('number_of_workers', number_of_workers)
+
+    # uses a default of "gateway" for when "gateway_hostname" is not set
+    gateway_hostname = os.getenv("gateway_hostname", "gateway")
 
     for worker_id in range(number_of_workers):
-        time.sleep(2)
         # set the variables to send to the first iteration of the training loop
-        payload = {'alpha': alpha,
-                   'iterations': iterations,
-                   'hidden_size': hidden_size,
-                   'pixels_per_image': pixels_per_image,
-                   'num_labels': num_labels,
-                   'batch_size': batch_size,
-                   'dropout_percent': dropout_percent,
-                   'number_of_workers': number_of_workers,
-                   'worker_id': worker_id
-                   }
+        payload = {'worker_id': worker_id}
         # make the request to call the emnist-train function HACKY timeout
         try:
             requests.get(
                 "http://" + gateway_hostname + ":31112/function/emnist-train",
                 params=payload,
-                timeout=0.1
-            )
+                timeout=0.1)
         except requests.exceptions.ReadTimeout:
             pass
