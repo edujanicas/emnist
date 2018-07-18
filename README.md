@@ -15,23 +15,33 @@ Access to the OpenFAAS cluster must also be in place in order to read the result
 ### Installing
 
 On the project home folder, run the following command:
-	$ faas-cli build -f emnist.yml --parallel=2 && faas-cli push -f emnist.yml --parallel=2 && faas-cli deploy -f emnist.yml
+```bash
+$ faas-cli build -f emnist.yml --parallel=2 && faas-cli push -f emnist.yml --parallel=2 && faas-cli deploy -f emnist.yml
+```
 
 After this step you should be able to invoke it by executing:
-	$ echo | faas-cli invoke emnist-setup
+```bash
+$ echo | faas-cli invoke emnist-setup
+```
 
 ## Running the tests
 
 The following results are obtained in a 3 machine Kubernetes cluster with Intel(R) Xeon(R) CPU E3-1220 v3 @ 3.10GHz and 16GB of RAM per server. The following commands are executed on the k8s master.
 
 To scale the deployment to the number of desired machines, execute:
-	$ kubectl scale deployment emnist-train --replicas=3 --namespace=openfaas-fn
+```bash
+$ kubectl scale deployment emnist-train --replicas=3 --namespace=openfaas-fn
+```
 
 To see the names of the pods executing the function, run:
-	$ kubectl get pods --namespace=openfaas-fn -o wide | grep "emnist-train"
+```bash
+$ kubectl get pods --namespace=openfaas-fn -o wide | grep "emnist-train"
+```
 
 To see the results of the training in the logs, run:
-	$ for server in $(kubectl get pods --namespace=openfaas-fn -o wide | grep "emnist-train" | cut -d' ' -f1); do kubectl logs --namespace=openfaas-fn $server emnist-train; done
+```bash
+$ for server in $(kubectl get pods --namespace=openfaas-fn -o wide | grep "emnist-train" | cut -d' ' -f1); do kubectl logs --namespace=openfaas-fn $server emnist-train; done
+```
 
 ### Setup + loop in one function (32 batch size, update before each mini-batch)
 
