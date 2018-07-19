@@ -4,6 +4,7 @@ from urllib.parse import parse_qs
 import numpy as np
 from scipy import io as spio
 import keras
+import time
 
 from pymemcache.client import base
 
@@ -64,6 +65,7 @@ def handle(req):
     """
     # Print next line for debug only
     # sys.stderr.write(str(os.environ))
+    start = time.time()
 
     client = base.Client((os.getenv("MEMCACHED_SERVICE_HOST"),
                           int(os.getenv("MEMCACHED_SERVICE_PORT"))))
@@ -73,7 +75,6 @@ def handle(req):
 
     # receives the parameters needed for the training
     alpha = float(client.get('alpha'))
-    iterations = int(client.get('iterations'))
     hidden_size = int(client.get('hidden_size'))
     pixels_per_image = int(client.get('pixels_per_image'))
     num_labels = int(client.get('num_labels'))
@@ -96,20 +97,22 @@ def handle(req):
     images, labels, test_images, test_labels = load_dataset(
         worker_id, number_of_workers)
 
+    iteration = 1
+
     while True:
 
         correct_cnt = 0
 
         for i in range(int(len(images) / batch_size)):
 
-            weights_0_1 = np.frombuffer(
-                client.get('weights_0_1')).reshape(pixels_per_image,
-                                                   hidden_size)
-            weights_1_2 = np.frombuffer(
-                client.get('weights_1_2')).reshape(hidden_size, num_labels)
+            if i % 10 == 0:
+                weights_0_1 = np.frombuffer(client.get('weights_0_1')).reshape(
+                    pixels_per_image, hidden_size)
+                weights_1_2 = np.frombuffer(client.get('weights_1_2')).reshape(
+                    hidden_size, num_labels)
 
-            weights_0_1.flags.writeable = True
-            weights_1_2.flags.writeable = True
+                weights_0_1.flags.writeable = True
+                weights_1_2.flags.writeable = True
 
             batch_start, batch_end = ((i * batch_size), ((i + 1) * batch_size))
             # 2. PREDICT & COMPARE: Make a Prediction,
@@ -135,12 +138,12 @@ def handle(req):
                 weights_1_2.T) * tanh2deriv(layer_1)
             layer_1_delta *= dropout_mask
 
-            # 4. LEARN: Generate Weight Deltas and Update Weights
+            # 4. LEARN: Generate Weight Deltas and Update Weights FIXME
             weights_1_2 += alpha * layer_1.T.dot(layer_2_delta)
             weights_0_1 += alpha * layer_0.T.dot(layer_1_delta)
 
-            client.set('weights_0_1', weights_0_1.tobytes())
-            client.set('weights_1_2', weights_1_2.tobytes())
+            client.set('weights_0_1', weights_0_1.tobytes(), noreply=True)
+            client.set('weights_1_2', weights_1_2.tobytes(), noreply=True)
 
         test_correct_cnt = 0
         for i in range(len(test_images)):
@@ -150,9 +153,11 @@ def handle(req):
             test_correct_cnt += int(
                 np.argmax(layer_2) == np.argmax(test_labels[i:i + 1]))
 
-        sys.stderr.write("\n" + "I:" + str(iter) + " Test-Acc:" +
-                         str(test_correct_cnt / float(len(test_images))) +
-                         " Train-Acc:" + str(correct_cnt / float(len(images))))
-
         if (test_correct_cnt / float(len(test_images))) > 0.75:
+            end = time.time()
+            sys.stderr.write("\n" + "Iterations: " + str(iteration) +
+                             " Time: " + str(end - start) + " Name: " +
+                             os.getenv("HOSTNAME"))
             return
+
+        iteration += 1

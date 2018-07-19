@@ -19,8 +19,8 @@ functions:
       hidden_size: 100
       pixels_per_image: 784
       num_labels: 47
-      batch_size: 32
       dropout_percent: 0.2
+      batch_size: 32
       number_of_workers: 3
   emnist-train:
     lang: python3-debian
@@ -28,7 +28,7 @@ functions:
     image: ejanicas/emnist-train
     environment:
       combine_output: false
-      write_debug: true
+      write_debug: false
       gateway_hostname: 146.179.131.181
       read_timeout: 6000s
       write_timeout: 6000s

@@ -1,6 +1,7 @@
 import numpy as np
 import os
 import requests
+import sys
 
 from pymemcache.client import base
 
@@ -10,6 +11,7 @@ def handle(req):
     Args:
         req (str): request body
     """
+    sys.stderr.write(str(os.environ))
 
     # random seed set to 1 for debug purposes
     np.random.seed(1)
