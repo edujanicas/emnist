@@ -105,14 +105,13 @@ def handle(req):
 
         for i in range(int(len(images) / batch_size)):
 
-            if i % 5 == 0:
-                weights_0_1 = np.frombuffer(client.get('weights_0_1')).reshape(
-                    pixels_per_image, hidden_size)
-                weights_1_2 = np.frombuffer(client.get('weights_1_2')).reshape(
-                    hidden_size, num_labels)
+            weights_0_1 = np.frombuffer(client.get('weights_0_1')).reshape(
+                pixels_per_image, hidden_size)
+            weights_1_2 = np.frombuffer(client.get('weights_1_2')).reshape(
+                hidden_size, num_labels)
 
-                weights_0_1.flags.writeable = True
-                weights_1_2.flags.writeable = True
+            weights_0_1.flags.writeable = True
+            weights_1_2.flags.writeable = True
 
             batch_start, batch_end = ((i * batch_size), ((i + 1) * batch_size))
             # 2. PREDICT & COMPARE: Make a Prediction,
