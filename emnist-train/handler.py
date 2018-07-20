@@ -105,7 +105,7 @@ def handle(req):
 
         for i in range(int(len(images) / batch_size)):
 
-            if i % 10 == 0:
+            if i % 5 == 0:
                 weights_0_1 = np.frombuffer(client.get('weights_0_1')).reshape(
                     pixels_per_image, hidden_size)
                 weights_1_2 = np.frombuffer(client.get('weights_1_2')).reshape(
