@@ -26,8 +26,8 @@ for f in emnist*.yml; do
         START=`date +%s`
         while [ $(( $(date +%s) - 7200 )) -lt $START ]; do
             CMD1=$(for server in $(kubectl get pods --namespace=openfaas-fn -o wide | grep "emnist-train" | cut -d' ' -f1); do kubectl logs --namespace=openfaas-fn $server emnist-train; done | grep -c "Time")
-            CMD2=$(for server in $(kubectl get pods --namespace=openfaas-fn -o wide | grep "emnist-train" | cut -d' ' -f1); do kubectl logs --namespace=openfaas-fn $server emnist-train; done | grep -c "Worker number")
-            if [ "$CMD1" = "$CMD2" ] && [ "$CMD1" > 0 ] ; then
+            CMD2=$(for server in $(kubectl get pods --namespace=openfaas-fn -o wide | grep "emnist-train" | cut -d' ' -f1); do kubectl logs --namespace=openfaas-fn $server emnist-train; done | grep -c "Forking fprocess")
+            if [[ "$CMD1" = "$CMD2" ]]; then
                 for server in $(kubectl get pods --namespace=openfaas-fn -o wide | grep "emnist-train" | cut -d' ' -f1); do kubectl logs --namespace=openfaas-fn $server emnist-train; done | grep "Time" >> output.txt
                 break
             fi
