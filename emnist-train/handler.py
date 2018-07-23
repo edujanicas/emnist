@@ -59,6 +59,52 @@ def load_dataset(worker_id, number_of_workers):
     return images, labels, test_images, test_labels
 
 
+def train_minibatch(i, client, pixels_per_image, hidden_size, num_labels,
+                    batch_size, images, dropout_percent, correct_cnt, labels,
+                    alpha, weights_0_1, weights_1_2):
+
+    if i % 10 == 0:
+        weights_0_1 = np.frombuffer(client.get('weights_0_1')).reshape(
+            pixels_per_image, hidden_size)
+        weights_1_2 = np.frombuffer(client.get('weights_1_2')).reshape(
+            hidden_size, num_labels)
+
+        weights_0_1.flags.writeable = True
+        weights_1_2.flags.writeable = True
+
+    batch_start, batch_end = ((i * batch_size), ((i + 1) * batch_size))
+    # 2. PREDICT & COMPARE: Make a Prediction,
+    #    Calculate Output Error and Delta
+    layer_0 = images[batch_start:batch_end]
+    layer_1 = tanh(np.dot(layer_0, weights_0_1))
+    dropout_mask = np.random.randint(2, size=layer_1.shape)
+
+    layer_1 *= np.random.binomial([np.ones(
+        (len(layer_1), hidden_size))], 1 - dropout_percent)[0] * (
+            1.0 / (1 - dropout_percent))
+    layer_2 = softmax(np.dot(layer_1, weights_1_2))
+
+    for k in range(batch_size):
+        correct_cnt += int(
+            np.argmax(layer_2[k:k + 1]) == np.argmax(labels[
+                batch_start + k:batch_start + k + 1]))
+
+    layer_2_delta = (labels[batch_start:batch_end] - layer_2) / (
+        batch_size * layer_2.shape[0])
+    # 3. LEARN: Backpropagate From layer_2 to layer_1
+    layer_1_delta = layer_2_delta.dot(weights_1_2.T) * tanh2deriv(layer_1)
+    layer_1_delta *= dropout_mask
+
+    # 4. LEARN: Generate Weight Deltas and Update Weights FIXME
+    weights_1_2 += alpha * layer_1.T.dot(layer_2_delta)
+    weights_0_1 += alpha * layer_0.T.dot(layer_1_delta)
+
+    client.set('weights_0_1', weights_0_1.tobytes(), noreply=True)
+    client.set('weights_1_2', weights_1_2.tobytes(), noreply=True)
+
+    return correct_cnt, layer_0, layer_1, weights_0_1, weights_1_2
+
+
 def handle(req):
     """handle a request to the function
     Args:
@@ -107,46 +153,10 @@ def handle(req):
         correct_cnt = 0
 
         for i in range(int(len(images) / batch_size)):
-
-            if i % 10 == 0:
-                weights_0_1 = np.frombuffer(client.get('weights_0_1')).reshape(
-                    pixels_per_image, hidden_size)
-                weights_1_2 = np.frombuffer(client.get('weights_1_2')).reshape(
-                    hidden_size, num_labels)
-
-                weights_0_1.flags.writeable = True
-                weights_1_2.flags.writeable = True
-
-            batch_start, batch_end = ((i * batch_size), ((i + 1) * batch_size))
-            # 2. PREDICT & COMPARE: Make a Prediction,
-            #    Calculate Output Error and Delta
-            layer_0 = images[batch_start:batch_end]
-            layer_1 = tanh(np.dot(layer_0, weights_0_1))
-            dropout_mask = np.random.randint(2, size=layer_1.shape)
-
-            layer_1 *= np.random.binomial(
-                [np.ones((len(layer_1), hidden_size))],
-                1 - dropout_percent)[0] * (1.0 / (1 - dropout_percent))
-            layer_2 = softmax(np.dot(layer_1, weights_1_2))
-
-            for k in range(batch_size):
-                correct_cnt += int(
-                    np.argmax(layer_2[k:k + 1]) == np.argmax(labels[
-                        batch_start + k:batch_start + k + 1]))
-
-            layer_2_delta = (labels[batch_start:batch_end] - layer_2) / (
-                batch_size * layer_2.shape[0])
-            # 3. LEARN: Backpropagate From layer_2 to layer_1
-            layer_1_delta = layer_2_delta.dot(
-                weights_1_2.T) * tanh2deriv(layer_1)
-            layer_1_delta *= dropout_mask
-
-            # 4. LEARN: Generate Weight Deltas and Update Weights FIXME
-            weights_1_2 += alpha * layer_1.T.dot(layer_2_delta)
-            weights_0_1 += alpha * layer_0.T.dot(layer_1_delta)
-
-            client.set('weights_0_1', weights_0_1.tobytes(), noreply=True)
-            client.set('weights_1_2', weights_1_2.tobytes(), noreply=True)
+            correct_cnt, layer_0, layer_1, weights_0_1, weights_1_2 = train_minibatch(
+                i, client, pixels_per_image, hidden_size, num_labels,
+                batch_size, images, dropout_percent, correct_cnt, labels,
+                alpha, weights_0_1, weights_1_2)
 
         test_correct_cnt = 0
         for i in range(len(test_images)):
