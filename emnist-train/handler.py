@@ -99,6 +99,9 @@ def handle(req):
     images, labels, test_images, test_labels = load_dataset(
         worker_id, number_of_workers)
 
+    if iteration == 1:
+        sys.stderr.write("Worker number " + str(worker_id))
+
     if accuracy < 0.75:
 
         correct_cnt = 0
