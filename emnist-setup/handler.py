@@ -2,6 +2,7 @@ import numpy as np
 import os
 import requests
 import sys
+import time
 
 from pymemcache.client import base
 
@@ -22,8 +23,9 @@ def handle(req):
 
     # 1. Initialize the Network's Weights and Data
     # TODO: Switch values to become env vars
+    start = time.time()
+
     alpha = float(os.getenv("alpha"))
-    iterations = int(os.getenv("iterations"))
     hidden_size = int(os.getenv("hidden_size"))
     pixels_per_image = int(os.getenv("pixels_per_image"))
     num_labels = int(os.getenv("num_labels"))
@@ -39,13 +41,13 @@ def handle(req):
     client.set('weights_1_2', weights_1_2.tobytes())
     client.set('updated', 0)
     client.set('alpha', alpha)
-    client.set('iterations', iterations)
     client.set('hidden_size', hidden_size)
     client.set('pixels_per_image', pixels_per_image)
     client.set('num_labels', num_labels)
     client.set('batch_size', batch_size)
     client.set('dropout_percent', dropout_percent)
     client.set('number_of_workers', number_of_workers)
+    client.set('start', start)
 
     # uses a default of "gateway" for when "gateway_hostname" is not set
     gateway_hostname = os.getenv("gateway_hostname", "gateway")
@@ -53,6 +55,8 @@ def handle(req):
     for worker_id in range(number_of_workers):
         # set the variables to send to the first iteration of the training loop
         payload = {'worker_id': worker_id}
+        client.set('accuracy%d'.format(worker_id), 0)
+        client.set('iteration%d'.format(worker_id), 1)
         # make the request to call the emnist-train function HACKY timeout
         try:
             requests.get(

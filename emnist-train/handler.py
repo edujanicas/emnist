@@ -1,4 +1,5 @@
 import os
+import requests
 import sys
 from urllib.parse import parse_qs
 import numpy as np
@@ -65,8 +66,6 @@ def handle(req):
     """
     # Print next line for debug only
     # sys.stderr.write(str(os.environ))
-    start = time.time()
-
     client = base.Client((os.getenv("MEMCACHED_SERVICE_HOST"),
                           int(os.getenv("MEMCACHED_SERVICE_PORT"))))
 
@@ -83,6 +82,9 @@ def handle(req):
     number_of_workers = int(client.get('number_of_workers'))
     worker_id = int(qs["worker_id"][0])
 
+    accuracy = float(client.get('accuracy%d'.format(worker_id)))
+    iteration = int(client.get('iteration%d'.format(worker_id)))
+
     weights_0_1 = np.frombuffer(client.get('weights_0_1')).reshape(
         pixels_per_image, hidden_size)
     weights_1_2 = np.frombuffer(client.get('weights_1_2')).reshape(
@@ -97,9 +99,7 @@ def handle(req):
     images, labels, test_images, test_labels = load_dataset(
         worker_id, number_of_workers)
 
-    iteration = 1
-
-    while True:
+    if accuracy < 0.75:
 
         correct_cnt = 0
 
@@ -153,11 +153,28 @@ def handle(req):
             test_correct_cnt += int(
                 np.argmax(layer_2) == np.argmax(test_labels[i:i + 1]))
 
-        if (test_correct_cnt / float(len(test_images))) > 0.75:
-            end = time.time()
-            sys.stderr.write("\n" + "Iterations: " + str(iteration) +
-                             " Time: " + str(end - start) + " Name: " +
-                             os.getenv("HOSTNAME"))
-            return
-
+        accuracy = test_correct_cnt / float(len(test_images))
         iteration += 1
+
+        client.set('accuracy%d'.format(worker_id), accuracy)
+        client.set('iteration%d'.format(worker_id), iteration)
+
+        # uses a default of "gateway" for when "gateway_hostname" is not set
+        gateway_hostname = os.getenv("gateway_hostname", "gateway")
+        # set the variables to send to the first iteration of the training loop
+        payload = {'worker_id': worker_id}
+        # make the request to call the emnist-train function HACKY timeout
+        try:
+            requests.get(
+                "http://" + gateway_hostname + ":31112/function/emnist-train",
+                params=payload,
+                timeout=0.1)
+        except requests.exceptions.ReadTimeout:
+            pass
+
+    else:
+        start = float(client.get('start'))
+        end = time.time()
+        sys.stderr.write("\n" + "Worker ID: " + str(worker_id) +
+                         " Iterations: " + str(iteration) + " Time: " +
+                         str(end - start) + " Name: " + os.getenv("HOSTNAME"))
