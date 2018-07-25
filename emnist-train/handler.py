@@ -6,7 +6,6 @@ import numpy as np
 from scipy import io as spio
 import keras
 import time
-import thread
 
 from pymemcache.client import base
 
@@ -50,58 +49,33 @@ def softmax(x):
 
 def stateful(arg1, arg2):
     """Decorator to load and persist values of lambda function.
-
     Args:
         arg1 (string): Name of the first value to R/W.
         arg2 (string): Name of the second value to R/W.
-
     Returns:
         wrap(f): A function used to wrap the function to be decorated.
     """
 
     def wrap(f):
         # Everything before decoration happens here
-        client_global = base.Client((os.getenv("MEMCACHED_SERVICE_HOST"),
-                                     int(os.getenv("MEMCACHED_SERVICE_PORT"))))
-        client_local = base.Client((os.getenv("localhost"),
-                                    int(os.getenv("MEMCACHED_SERVICE_PORT"))))
-
-        def synchronize():
-            """
-            Function to synchronize local and global databases.
-            """
-            while True:
-                weights_0_1_local = client_local.get(arg1)
-                weights_1_2_local = client_local.get(arg2)
-                weights_0_1_global = client_global.get(arg1)
-                weights_1_2_global = client_global.get(arg2)
-                client_global.set(
-                    'weights_0_1', weights_0_1_local.tobytes(), noreply=True)
-                client_global.set(
-                    'weights_1_2', weights_1_2_local.tobytes(), noreply=True)
-                client_local.set(
-                    'weights_0_1', weights_0_1_global.tobytes(), noreply=True)
-                client_local.set(
-                    'weights_1_2', weights_1_2_global.tobytes(), noreply=True)
+        client = base.Client((os.getenv("MEMCACHED_SERVICE_HOST"),
+                              int(os.getenv("MEMCACHED_SERVICE_PORT"))))
 
         def wrapped_f(*args):
             # After decoration
             # Before function
-            weights_0_1 = client_local.get(arg1)
-            weights_1_2 = client_local.get(arg2)
+            weights_0_1 = client.get(arg1)
+            weights_1_2 = client.get(arg2)
 
             correct_cnt, layer_0, layer_1, weights_0_1, weights_1_2 = f(
                 *args, weights_0_1, weights_1_2)
 
             # After function
-            client_local.set(
-                'weights_0_1', weights_0_1.tobytes(), noreply=True)
-            client_local.set(
-                'weights_1_2', weights_1_2.tobytes(), noreply=True)
+            client.set('weights_0_1', weights_0_1.tobytes(), noreply=True)
+            client.set('weights_1_2', weights_1_2.tobytes(), noreply=True)
 
             return correct_cnt, layer_0, layer_1, weights_0_1, weights_1_2
 
-        thread.start_new_thread(synchronize, ())
         return wrapped_f
 
     return wrap
