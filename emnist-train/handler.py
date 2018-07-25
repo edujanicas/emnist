@@ -70,18 +70,19 @@ def stateful(arg1, arg2):
             """
             Function to synchronize local and global databases.
             """
-            weights_0_1_local = client_local.get(arg1)
-            weights_1_2_local = client_local.get(arg2)
-            weights_0_1_global = client_global.get(arg1)
-            weights_1_2_global = client_global.get(arg2)
-            client_global.set(
-                'weights_0_1', weights_0_1_local.tobytes(), noreply=True)
-            client_global.set(
-                'weights_1_2', weights_1_2_local.tobytes(), noreply=True)
-            client_local.set(
-                'weights_0_1', weights_0_1_global.tobytes(), noreply=True)
-            client_local.set(
-                'weights_1_2', weights_1_2_global.tobytes(), noreply=True)
+            while True:
+                weights_0_1_local = client_local.get(arg1)
+                weights_1_2_local = client_local.get(arg2)
+                weights_0_1_global = client_global.get(arg1)
+                weights_1_2_global = client_global.get(arg2)
+                client_global.set(
+                    'weights_0_1', weights_0_1_local.tobytes(), noreply=True)
+                client_global.set(
+                    'weights_1_2', weights_1_2_local.tobytes(), noreply=True)
+                client_local.set(
+                    'weights_0_1', weights_0_1_global.tobytes(), noreply=True)
+                client_local.set(
+                    'weights_1_2', weights_1_2_global.tobytes(), noreply=True)
 
         def wrapped_f(*args):
             # After decoration
