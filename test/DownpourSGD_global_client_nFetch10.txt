@@ -1,0 +1,543 @@
+Filename: emnist1281.yml
+      batch_size: 128
+      number_of_workers: 1
+
+Round number 1
+emnist-train-755b5dbbc4-b6lmd   2/2       Running   0          3m        10.44.0.1   wombat41
+emnist-train-755b5dbbc4-q8q98   2/2       Running   0          3m        10.36.0.3   wombat42
+emnist-train-755b5dbbc4-whqvc   2/2       Running   0          3m        10.32.0.9   wombat40
+Iterations: 71 Time: 1776.6517598628998 Name: emnist-train-755b5dbbc4-q8q98
+
+Round number 2
+emnist-train-58fff6cc99-9cxg8   2/2       Running   0          3m        10.44.0.2   wombat41
+emnist-train-58fff6cc99-qzkc8   2/2       Running   0          3m        10.44.0.4   wombat41
+emnist-train-58fff6cc99-wpwkx   2/2       Running   0          3m        10.36.0.4   wombat42
+Iterations: 71 Time: 3145.2953176498413 Name: emnist-train-58fff6cc99-9cxg8
+
+Round number 3
+emnist-train-c9bcff647-rzrts   2/2       Running   0          3m        10.36.0.3   wombat42
+emnist-train-c9bcff647-svd67   2/2       Running   0          3m        10.44.0.1   wombat41
+emnist-train-c9bcff647-wq5mc   2/2       Running   0          3m        10.32.0.9   wombat40
+Iterations: 71 Time: 3145.804578781128 Name: emnist-train-c9bcff647-svd67
+
+Round number 4
+emnist-train-7d58688d6d-46pqk   2/2       Running   0          3m        10.44.0.4   wombat41
+emnist-train-7d58688d6d-lv4kl   2/2       Running   0          3m        10.44.0.2   wombat41
+emnist-train-7d58688d6d-wmqrs   2/2       Running   0          3m        10.36.0.4   wombat42
+Iterations: 71 Time: 3141.1492652893066 Name: emnist-train-7d58688d6d-46pqk
+
+Round number 5
+emnist-train-5c4b644b49-glgs2   2/2       Running   0          3m        10.44.0.1   wombat41
+emnist-train-5c4b644b49-m8zdv   2/2       Running   0          3m        10.36.0.3   wombat42
+emnist-train-5c4b644b49-vfk2c   2/2       Running   0          3m        10.32.0.9   wombat40
+Iterations: 71 Time: 3134.277615070343 Name: emnist-train-5c4b644b49-glgs2
+
+
+Filename: emnist1283.yml
+      batch_size: 128
+      number_of_workers: 3
+
+Round number 1
+emnist-train-699b47865-45z56    2/2       Running   0          3m        10.44.0.2   wombat41
+emnist-train-699b47865-4f6ch    2/2       Running   0          2m        10.44.0.4   wombat41
+emnist-train-699b47865-98jvt    2/2       Running   0          3m        10.36.0.4   wombat42
+Iterations: 188 Time: 3626.778621673584 Name: emnist-train-699b47865-4f6ch
+Iterations: 91 Time: 3630.13720870018 Name: emnist-train-699b47865-98jvt
+Iterations: 94 Time: 3640.569324731827 Name: emnist-train-699b47865-98jvt
+
+Round number 2
+emnist-train-78dcbc9666-5plrp   2/2       Running   0          2m        10.44.0.1   wombat41
+emnist-train-78dcbc9666-5tltv   2/2       Running   0          3m        10.36.0.3   wombat42
+emnist-train-78dcbc9666-xrdtt   2/2       Running   0          3m        10.32.0.9   wombat40
+Iterations: 89 Time: 3841.592792749405 Name: emnist-train-78dcbc9666-5tltv
+Iterations: 92 Time: 3841.9331710338593 Name: emnist-train-78dcbc9666-5tltv
+Iterations: 190 Time: 3782.693742275238 Name: emnist-train-78dcbc9666-xrdtt
+
+Round number 3
+emnist-train-584b5dd445-9979n   2/2       Running   0          3m        10.36.0.4   wombat42
+emnist-train-584b5dd445-tzng8   2/2       Running   0          3m        10.44.0.4   wombat41
+emnist-train-584b5dd445-wsrql   2/2       Running   0          3m        10.44.0.2   wombat41
+
+Round number 4
+emnist-train-5cb4f79cb8-4sqv5   2/2       Running   0          3m        10.32.0.9   wombat40
+emnist-train-5cb4f79cb8-crdvg   2/2       Running   0          2m        10.44.0.1   wombat41
+emnist-train-5cb4f79cb8-flwqt   2/2       Running   0          3m        10.36.0.3   wombat42
+Iterations: 202 Time: 5193.417376279831 Name: emnist-train-5cb4f79cb8-4sqv5
+Iterations: 86 Time: 5203.113066911697 Name: emnist-train-5cb4f79cb8-crdvg
+Iterations: 87 Time: 5203.609951496124 Name: emnist-train-5cb4f79cb8-crdvg
+
+Round number 5
+emnist-train-c4bdcf8d5-28msh    2/2       Running   0          3m        10.44.0.2   wombat41
+emnist-train-c4bdcf8d5-bvgpj    2/2       Running   0          3m        10.44.0.4   wombat41
+emnist-train-c4bdcf8d5-zwtt6    2/2       Running   0          3m        10.36.0.4   wombat42
+Iterations: 202 Time: 3864.188928604126 Name: emnist-train-c4bdcf8d5-28msh
+Iterations: 89 Time: 3871.71702003479 Name: emnist-train-c4bdcf8d5-zwtt6
+Iterations: 90 Time: 3880.521096467972 Name: emnist-train-c4bdcf8d5-zwtt6
+
+
+Filename: emnist1286.yml
+      batch_size: 128
+      number_of_workers: 6
+
+Round number 1
+emnist-train-6bbf495f9b-4jtvm   2/2       Running   0          3m        10.32.0.9   wombat40
+emnist-train-6bbf495f9b-fd29c   2/2       Running   0          2m        10.44.0.1   wombat41
+emnist-train-6bbf495f9b-mtw6f   2/2       Running   0          3m        10.36.0.3   wombat42
+Iterations: 311 Time: 4826.01370716095 Name: emnist-train-6bbf495f9b-4jtvm
+Iterations: 325 Time: 4832.320752620697 Name: emnist-train-6bbf495f9b-fd29c
+Iterations: 93 Time: 4847.83974313736 Name: emnist-train-6bbf495f9b-mtw6f
+Iterations: 95 Time: 4884.5222754478455 Name: emnist-train-6bbf495f9b-mtw6f
+Iterations: 86 Time: 4887.373678445816 Name: emnist-train-6bbf495f9b-mtw6f
+Iterations: 91 Time: 4896.422077417374 Name: emnist-train-6bbf495f9b-mtw6f
+
+Round number 2
+emnist-train-54cf55b9c6-cqngm   2/2       Running   0          3m        10.44.0.3   wombat41
+emnist-train-54cf55b9c6-hrzx8   2/2       Running   0          2m        10.44.0.4   wombat41
+emnist-train-54cf55b9c6-l9lzt   2/2       Running   0          3m        10.36.0.4   wombat42
+
+Round number 3
+emnist-train-78ff55dcb4-7d996   2/2       Running   0          2m        10.44.0.1   wombat41
+emnist-train-78ff55dcb4-gvljv   2/2       Running   0          3m        10.32.0.9   wombat40
+emnist-train-78ff55dcb4-zjqgr   2/2       Running   0          3m        10.36.0.3   wombat42
+Iterations: 103 Time: 4277.897500753403 Name: emnist-train-78ff55dcb4-7d996
+Iterations: 103 Time: 4284.68568110466 Name: emnist-train-78ff55dcb4-7d996
+Iterations: 105 Time: 4296.547504663467 Name: emnist-train-78ff55dcb4-gvljv
+Iterations: 104 Time: 4299.121903657913 Name: emnist-train-78ff55dcb4-gvljv
+Iterations: 105 Time: 4303.789972543716 Name: emnist-train-78ff55dcb4-gvljv
+Iterations: 370 Time: 4270.448364496231 Name: emnist-train-78ff55dcb4-zjqgr
+
+Round number 4
+emnist-train-f68487ff8-767wx    2/2       Running   0          3m        10.36.0.4   wombat42
+emnist-train-f68487ff8-8tnxd    2/2       Running   0          3m        10.44.0.2   wombat41
+emnist-train-f68487ff8-hmddg    2/2       Running   0          2m        10.44.0.4   wombat41
+
+Round number 5
+emnist-train-57668567d4-bb55l   2/2       Running   0          3m        10.32.0.9   wombat40
+emnist-train-57668567d4-l69nm   2/2       Running   0          3m        10.44.0.1   wombat41
+emnist-train-57668567d4-nxrjw   2/2       Running   0          3m        10.36.0.3   wombat42
+Iterations: 150 Time: 4506.538772821426 Name: emnist-train-57668567d4-bb55l
+Iterations: 150 Time: 4508.962419509888 Name: emnist-train-57668567d4-bb55l
+Iterations: 79 Time: 4537.263487100601 Name: emnist-train-57668567d4-l69nm
+Iterations: 78 Time: 4541.885750055313 Name: emnist-train-57668567d4-l69nm
+Iterations: 78 Time: 4580.232888460159 Name: emnist-train-57668567d4-l69nm
+Iterations: 380 Time: 4500.894213438034 Name: emnist-train-57668567d4-nxrjw
+
+
+Filename: emnist161.yml
+      batch_size: 16
+      number_of_workers: 1
+
+Round number 1
+emnist-train-8d686fcf4-bhqjm    2/2       Running   0          3m        10.44.0.4   wombat41
+emnist-train-8d686fcf4-hz9gj    2/2       Running   0          3m        10.36.0.4   wombat42
+emnist-train-8d686fcf4-rhdxp    2/2       Running   0          3m        10.44.0.3   wombat41
+Iterations: 2 Time: 601.0550198554993 Name: emnist-train-8d686fcf4-rhdxp
+
+Round number 2
+emnist-train-fbdffd79b-6m8mm    2/2       Running   0          3m        10.32.0.9   wombat40
+emnist-train-fbdffd79b-85gv2    2/2       Running   0          3m        10.36.0.3   wombat42
+emnist-train-fbdffd79b-h6flg    2/2       Running   0          2m        10.44.0.1   wombat41
+Iterations: 2 Time: 602.7857930660248 Name: emnist-train-fbdffd79b-6m8mm
+
+Round number 3
+emnist-train-d94454787-6njwz    2/2       Running   0          3m        10.44.0.2   wombat41
+emnist-train-d94454787-qz2mz    2/2       Running   0          3m        10.44.0.4   wombat41
+emnist-train-d94454787-rck26    2/2       Running   0          3m        10.36.0.4   wombat42
+Iterations: 2 Time: 599.1494905948639 Name: emnist-train-d94454787-qz2mz
+
+Round number 4
+emnist-train-78f677b4d5-2n8nx   2/2       Running   0          3m        10.32.0.9   wombat40
+emnist-train-78f677b4d5-t8g7x   2/2       Running   0          3m        10.44.0.1   wombat41
+emnist-train-78f677b4d5-xkmfs   2/2       Running   0          3m        10.36.0.3   wombat42
+Iterations: 2 Time: 602.6981661319733 Name: emnist-train-78f677b4d5-2n8nx
+
+Round number 5
+emnist-train-86c59445db-7rfjq   2/2       Running   0          3m        10.44.0.2   wombat41
+emnist-train-86c59445db-gkvvm   2/2       Running   0          3m        10.36.0.4   wombat42
+emnist-train-86c59445db-kpk4q   2/2       Running   0          2m        10.44.0.4   wombat41
+Iterations: 2 Time: 599.1282649040222 Name: emnist-train-86c59445db-kpk4q
+
+
+Filename: emnist163.yml
+      batch_size: 16
+      number_of_workers: 3
+
+Round number 1
+emnist-train-5f454f6b55-854vl   2/2       Running   0          3m        10.44.0.1   wombat41
+emnist-train-5f454f6b55-kzqsp   2/2       Running   0          3m        10.32.0.9   wombat40
+emnist-train-5f454f6b55-pjlt8   2/2       Running   0          3m        10.36.0.3   wombat42
+Iterations: 1 Time: 217.61243224143982 Name: emnist-train-5f454f6b55-854vl
+Iterations: 1 Time: 218.2461416721344 Name: emnist-train-5f454f6b55-854vl
+Iterations: 5 Time: 153.36831068992615 Name: emnist-train-5f454f6b55-pjlt8
+
+Round number 2
+emnist-train-75cb9746fc-bm5hb   2/2       Running   0          3m        10.44.0.4   wombat41
+emnist-train-75cb9746fc-cmg6w   2/2       Running   0          3m        10.44.0.3   wombat41
+emnist-train-75cb9746fc-h29rf   2/2       Running   0          3m        10.36.0.4   wombat42
+Iterations: 1 Time: 205.6446566581726 Name: emnist-train-75cb9746fc-bm5hb
+Iterations: 1 Time: 201.92723965644836 Name: emnist-train-75cb9746fc-cmg6w
+Iterations: 5 Time: 151.30334329605103 Name: emnist-train-75cb9746fc-h29rf
+
+Round number 3
+emnist-train-795cbdff9b-5ptjg   2/2       Running   0          3m        10.44.0.1   wombat41
+emnist-train-795cbdff9b-cf6x9   2/2       Running   0          3m        10.36.0.3   wombat42
+emnist-train-795cbdff9b-qbngn   2/2       Running   0          3m        10.32.0.9   wombat40
+Iterations: 3 Time: 430.66601395606995 Name: emnist-train-795cbdff9b-cf6x9
+Iterations: 4 Time: 471.9988009929657 Name: emnist-train-795cbdff9b-cf6x9
+Iterations: 4 Time: 475.13846373558044 Name: emnist-train-795cbdff9b-cf6x9
+
+Round number 4
+emnist-train-5c769ccb4-kl5sj    2/2       Running   0          3m        10.44.0.2   wombat41
+emnist-train-5c769ccb4-lnjhk    2/2       Running   0          3m        10.36.0.4   wombat42
+emnist-train-5c769ccb4-wlsxn    2/2       Running   0          2m        10.44.0.4   wombat41
+Iterations: 1 Time: 221.76996088027954 Name: emnist-train-5c769ccb4-kl5sj
+Iterations: 5 Time: 155.29356575012207 Name: emnist-train-5c769ccb4-lnjhk
+Iterations: 1 Time: 224.18063616752625 Name: emnist-train-5c769ccb4-wlsxn
+
+Round number 5
+emnist-train-656478b656-fxnp9   2/2       Running   0          3m        10.44.0.1   wombat41
+emnist-train-656478b656-hsftb   2/2       Running   0          3m        10.32.0.9   wombat40
+emnist-train-656478b656-vtsrr   2/2       Running   0          3m        10.36.0.3   wombat42
+Iterations: 3 Time: 316.80656719207764 Name: emnist-train-656478b656-fxnp9
+Iterations: 3 Time: 314.0458610057831 Name: emnist-train-656478b656-vtsrr
+Iterations: 4 Time: 331.6611657142639 Name: emnist-train-656478b656-vtsrr
+
+
+Filename: emnist166.yml
+      batch_size: 16
+      number_of_workers: 6
+
+Round number 1
+emnist-train-7fdf6c459b-bkv9g   2/2       Running   0          3m        10.36.0.4   wombat42
+emnist-train-7fdf6c459b-jvd2k   2/2       Running   0          3m        10.44.0.4   wombat41
+emnist-train-7fdf6c459b-xmvr2   2/2       Running   0          3m        10.44.0.2   wombat41
+Iterations: 4 Time: 469.82207798957825 Name: emnist-train-7fdf6c459b-bkv9g
+Iterations: 5 Time: 477.80855083465576 Name: emnist-train-7fdf6c459b-bkv9g
+Iterations: 5 Time: 484.33034229278564 Name: emnist-train-7fdf6c459b-bkv9g
+Iterations: 5 Time: 484.82310605049133 Name: emnist-train-7fdf6c459b-bkv9g
+Iterations: 4 Time: 484.5649118423462 Name: emnist-train-7fdf6c459b-xmvr2
+Iterations: 4 Time: 484.7941653728485 Name: emnist-train-7fdf6c459b-xmvr2
+
+Round number 2
+emnist-train-57bdc85774-clrrx   2/2       Running   0          3m        10.44.0.1   wombat41
+emnist-train-57bdc85774-g47pn   2/2       Running   0          3m        10.36.0.3   wombat42
+emnist-train-57bdc85774-zs6sk   2/2       Running   0          3m        10.32.0.9   wombat40
+Iterations: 3 Time: 538.80206990242 Name: emnist-train-57bdc85774-clrrx
+Iterations: 8 Time: 492.32212257385254 Name: emnist-train-57bdc85774-g47pn
+Iterations: 8 Time: 496.73932456970215 Name: emnist-train-57bdc85774-g47pn
+Iterations: 3 Time: 535.53142786026 Name: emnist-train-57bdc85774-zs6sk
+Iterations: 3 Time: 536.0116441249847 Name: emnist-train-57bdc85774-zs6sk
+Iterations: 3 Time: 538.7123169898987 Name: emnist-train-57bdc85774-zs6sk
+
+Round number 3
+emnist-train-5cc4588495-sgxtz   2/2       Running   0          3m        10.44.0.2   wombat41
+emnist-train-5cc4588495-vwm8f   2/2       Running   0          3m        10.44.0.4   wombat41
+emnist-train-5cc4588495-wwflb   2/2       Running   0          3m        10.36.0.4   wombat42
+Iterations: 4 Time: 610.6648635864258 Name: emnist-train-5cc4588495-sgxtz
+Iterations: 4 Time: 517.049741268158 Name: emnist-train-5cc4588495-vwm8f
+Iterations: 4 Time: 610.475747346878 Name: emnist-train-5cc4588495-vwm8f
+Iterations: 6 Time: 574.561107635498 Name: emnist-train-5cc4588495-wwflb
+Iterations: 6 Time: 596.0146343708038 Name: emnist-train-5cc4588495-wwflb
+Iterations: 6 Time: 598.8238952159882 Name: emnist-train-5cc4588495-wwflb
+
+Round number 4
+emnist-train-554b9cfcb8-4v4jq   2/2       Running   0          3m        10.36.0.3   wombat42
+emnist-train-554b9cfcb8-4xrff   2/2       Running   0          3m        10.44.0.1   wombat41
+emnist-train-554b9cfcb8-4xv6d   2/2       Running   0          3m        10.32.0.9   wombat40
+Iterations: 5 Time: 431.01464581489563 Name: emnist-train-554b9cfcb8-4v4jq
+Iterations: 7 Time: 456.9683201313019 Name: emnist-train-554b9cfcb8-4v4jq
+Iterations: 6 Time: 463.27204489707947 Name: emnist-train-554b9cfcb8-4v4jq
+Iterations: 3 Time: 435.40425419807434 Name: emnist-train-554b9cfcb8-4xrff
+Iterations: 3 Time: 441.0242009162903 Name: emnist-train-554b9cfcb8-4xrff
+Iterations: 4 Time: 459.6085042953491 Name: emnist-train-554b9cfcb8-4xv6d
+
+Round number 5
+emnist-train-677b758d85-lblcb   2/2       Running   0          3m        10.36.0.4   wombat42
+emnist-train-677b758d85-lsmhk   2/2       Running   0          2m        10.44.0.4   wombat41
+emnist-train-677b758d85-rp7tw   2/2       Running   0          3m        10.44.0.2   wombat41
+Iterations: 7 Time: 499.6569039821625 Name: emnist-train-677b758d85-lblcb
+Iterations: 7 Time: 505.30351305007935 Name: emnist-train-677b758d85-lblcb
+Iterations: 3 Time: 594.0967729091644 Name: emnist-train-677b758d85-lsmhk
+Iterations: 4 Time: 607.4804539680481 Name: emnist-train-677b758d85-lsmhk
+Iterations: 3 Time: 521.2251238822937 Name: emnist-train-677b758d85-rp7tw
+Iterations: 3 Time: 611.2717804908752 Name: emnist-train-677b758d85-rp7tw
+
+
+Filename: emnist321.yml
+      batch_size: 32
+      number_of_workers: 1
+
+Round number 1
+emnist-train-85b9dbcd99-n9pdv   2/2       Running   0          3m        10.32.0.9   wombat40
+emnist-train-85b9dbcd99-qt755   2/2       Running   0          2m        10.44.0.1   wombat41
+emnist-train-85b9dbcd99-wl2zl   2/2       Running   0          3m        10.36.0.3   wombat42
+Iterations: 5 Time: 1415.2303628921509 Name: emnist-train-85b9dbcd99-n9pdv
+
+Round number 2
+emnist-train-676c558dc9-hmn2q   2/2       Running   0          3m        10.44.0.3   wombat41
+emnist-train-676c558dc9-wpnwl   2/2       Running   0          2m        10.44.0.4   wombat41
+emnist-train-676c558dc9-zmmzc   2/2       Running   0          3m        10.36.0.4   wombat42
+Iterations: 5 Time: 209.40535712242126 Name: emnist-train-676c558dc9-zmmzc
+
+Round number 3
+emnist-train-5bf7db4b79-fgt6d   2/2       Running   0          3m        10.44.0.1   wombat41
+emnist-train-5bf7db4b79-kk2fz   2/2       Running   0          3m        10.32.0.9   wombat40
+emnist-train-5bf7db4b79-klt2q   2/2       Running   0          3m        10.36.0.3   wombat42
+Iterations: 5 Time: 770.7548489570618 Name: emnist-train-5bf7db4b79-fgt6d
+
+Round number 4
+emnist-train-8664f959c-hlds6   2/2       Running   0          2m        10.44.0.4   wombat41
+emnist-train-8664f959c-vvmft   2/2       Running   0          3m        10.36.0.4   wombat42
+emnist-train-8664f959c-wrxs7   2/2       Running   0          3m        10.44.0.3   wombat41
+Iterations: 5 Time: 768.6772661209106 Name: emnist-train-8664f959c-hlds6
+
+Round number 5
+emnist-train-6494576b9f-bx5tz   2/2       Running   0          2m        10.44.0.1   wombat41
+emnist-train-6494576b9f-fz6pw   2/2       Running   0          3m        10.36.0.3   wombat42
+emnist-train-6494576b9f-zx6zs   2/2       Running   0          3m        10.32.0.9   wombat40
+Iterations: 5 Time: 210.7546193599701 Name: emnist-train-6494576b9f-fz6pw
+
+
+Filename: emnist323.yml
+      batch_size: 32
+      number_of_workers: 3
+
+Round number 1
+emnist-train-88f897f96-9frlm    2/2       Running   0          2m        10.44.0.4   wombat41
+emnist-train-88f897f96-b7zmt    2/2       Running   0          3m        10.36.0.4   wombat42
+emnist-train-88f897f96-hrcl6    2/2       Running   0          3m        10.44.0.3   wombat41
+Iterations: 3 Time: 393.08058309555054 Name: emnist-train-88f897f96-9frlm
+Iterations: 3 Time: 394.60637164115906 Name: emnist-train-88f897f96-9frlm
+Iterations: 16 Time: 352.7453718185425 Name: emnist-train-88f897f96-b7zmt
+
+Round number 2
+emnist-train-675f784-7hmxk     2/2       Running   0          3m        10.32.0.9   wombat40
+emnist-train-675f784-b9h5s     2/2       Running   0          3m        10.36.0.3   wombat42
+emnist-train-675f784-wzxrs     2/2       Running   0          3m        10.44.0.1   wombat41
+Iterations: 11 Time: 620.8985178470612 Name: emnist-train-675f784-7hmxk
+Iterations: 10 Time: 595.927473783493 Name: emnist-train-675f784-b9h5s
+Iterations: 9 Time: 597.213451385498 Name: emnist-train-675f784-b9h5s
+
+Round number 3
+emnist-train-f4f48c4bd-4bfdz    2/2       Running   0          3m        10.36.0.4   wombat42
+emnist-train-f4f48c4bd-b8pcp    2/2       Running   0          3m        10.44.0.4   wombat41
+emnist-train-f4f48c4bd-lf7mg    2/2       Running   0          3m        10.44.0.2   wombat41
+Iterations: 11 Time: 1914.4063112735748 Name: emnist-train-f4f48c4bd-b8pcp
+Iterations: 11 Time: 1963.690177679062 Name: emnist-train-f4f48c4bd-b8pcp
+Iterations: 13 Time: 1964.5834050178528 Name: emnist-train-f4f48c4bd-lf7mg
+
+Round number 4
+emnist-train-5d77c87db6-lz6vw   2/2       Running   0          3m        10.32.0.9   wombat40
+emnist-train-5d77c87db6-q2kt4   2/2       Running   0          2m        10.44.0.1   wombat41
+emnist-train-5d77c87db6-srnq8   2/2       Running   0          3m        10.36.0.3   wombat42
+Iterations: 3 Time: 415.0459575653076 Name: emnist-train-5d77c87db6-q2kt4
+Iterations: 3 Time: 415.27924275398254 Name: emnist-train-5d77c87db6-q2kt4
+Iterations: 16 Time: 363.0856773853302 Name: emnist-train-5d77c87db6-srnq8
+
+Round number 5
+emnist-train-59cd44d85c-2rq92   2/2       Running   0          3m        10.36.0.4   wombat42
+emnist-train-59cd44d85c-8zdbd   2/2       Running   0          3m        10.44.0.3   wombat41
+emnist-train-59cd44d85c-v2n8n   2/2       Running   0          2m        10.44.0.4   wombat41
+Iterations: 17 Time: 355.3222744464874 Name: emnist-train-59cd44d85c-2rq92
+Iterations: 4 Time: 473.9379370212555 Name: emnist-train-59cd44d85c-8zdbd
+Iterations: 4 Time: 474.3327031135559 Name: emnist-train-59cd44d85c-8zdbd
+
+
+Filename: emnist326.yml
+      batch_size: 32
+      number_of_workers: 6
+
+Round number 1
+emnist-train-76f966c9bf-72qqs   2/2       Running   0          3m        10.32.0.9   wombat40
+emnist-train-76f966c9bf-gnf5g   2/2       Running   0          2m        10.44.0.1   wombat41
+emnist-train-76f966c9bf-r7jjd   2/2       Running   0          3m        10.36.0.3   wombat42
+Iterations: 12 Time: 1088.449146270752 Name: emnist-train-76f966c9bf-72qqs
+Iterations: 12 Time: 1089.8223786354065 Name: emnist-train-76f966c9bf-72qqs
+Iterations: 12 Time: 1059.8102600574493 Name: emnist-train-76f966c9bf-gnf5g
+Iterations: 12 Time: 1065.4936935901642 Name: emnist-train-76f966c9bf-gnf5g
+Iterations: 21 Time: 1052.152466058731 Name: emnist-train-76f966c9bf-r7jjd
+Iterations: 23 Time: 1056.2243790626526 Name: emnist-train-76f966c9bf-r7jjd
+
+Round number 2
+emnist-train-7f5fcfd44f-8gd64   2/2       Running   0          3m        10.44.0.4   wombat41
+emnist-train-7f5fcfd44f-gh4fq   2/2       Running   0          3m        10.36.0.4   wombat42
+emnist-train-7f5fcfd44f-h2l2w   2/2       Running   0          3m        10.44.0.2   wombat41
+Iterations: 9 Time: 1087.7258939743042 Name: emnist-train-7f5fcfd44f-8gd64
+Iterations: 10 Time: 1105.9164950847626 Name: emnist-train-7f5fcfd44f-8gd64
+Iterations: 20 Time: 1087.9752278327942 Name: emnist-train-7f5fcfd44f-gh4fq
+Iterations: 22 Time: 1094.5101068019867 Name: emnist-train-7f5fcfd44f-gh4fq
+Iterations: 10 Time: 1101.9014401435852 Name: emnist-train-7f5fcfd44f-h2l2w
+Iterations: 9 Time: 1103.7217547893524 Name: emnist-train-7f5fcfd44f-h2l2w
+
+Round number 3
+emnist-train-5f5984c6f9-p5rr5   2/2       Running   0          3m        10.32.0.9   wombat40
+emnist-train-5f5984c6f9-rg56h   2/2       Running   0          3m        10.44.0.1   wombat41
+emnist-train-5f5984c6f9-srwnc   2/2       Running   0          3m        10.36.0.3   wombat42
+Iterations: 21 Time: 2730.173149585724 Name: emnist-train-5f5984c6f9-p5rr5
+Iterations: 22 Time: 2740.9707467556 Name: emnist-train-5f5984c6f9-p5rr5
+Iterations: 23 Time: 2751.8954105377197 Name: emnist-train-5f5984c6f9-p5rr5
+Iterations: 20 Time: 2705.93191242218 Name: emnist-train-5f5984c6f9-rg56h
+Iterations: 20 Time: 2784.3917009830475 Name: emnist-train-5f5984c6f9-rg56h
+Iterations: 21 Time: 2784.9623367786407 Name: emnist-train-5f5984c6f9-rg56h
+
+Round number 4
+emnist-train-64747f5bdb-8jbng   2/2       Running   0          3m        10.44.0.2   wombat41
+emnist-train-64747f5bdb-dzxd5   2/2       Running   0          3m        10.36.0.4   wombat42
+emnist-train-64747f5bdb-ztzcq   2/2       Running   0          2m        10.44.0.4   wombat41
+Iterations: 11 Time: 1026.455028295517 Name: emnist-train-64747f5bdb-8jbng
+Iterations: 12 Time: 1057.2380900382996 Name: emnist-train-64747f5bdb-8jbng
+Iterations: 15 Time: 1022.2702162265778 Name: emnist-train-64747f5bdb-dzxd5
+Iterations: 16 Time: 1042.1162645816803 Name: emnist-train-64747f5bdb-dzxd5
+Iterations: 17 Time: 1045.8248510360718 Name: emnist-train-64747f5bdb-dzxd5
+Iterations: 13 Time: 1054.4023113250732 Name: emnist-train-64747f5bdb-ztzcq
+
+Round number 5
+emnist-train-79d4b9569d-5vh97   2/2       Running   0          3m        10.32.0.9   wombat40
+emnist-train-79d4b9569d-7nldb   2/2       Running   0          2m        10.44.0.1   wombat41
+emnist-train-79d4b9569d-qpr4n   2/2       Running   0          3m        10.36.0.3   wombat42
+Iterations: 31 Time: 977.376987695694 Name: emnist-train-79d4b9569d-5vh97
+Iterations: 12 Time: 994.7324669361115 Name: emnist-train-79d4b9569d-qpr4n
+Iterations: 11 Time: 1061.9029712677002 Name: emnist-train-79d4b9569d-qpr4n
+Iterations: 13 Time: 1068.884165763855 Name: emnist-train-79d4b9569d-qpr4n
+Iterations: 10 Time: 1070.3843517303467 Name: emnist-train-79d4b9569d-qpr4n
+Iterations: 11 Time: 1071.2622413635254 Name: emnist-train-79d4b9569d-qpr4n
+
+
+Filename: emnist641.yml
+      batch_size: 64
+      number_of_workers: 1
+
+Round number 1
+emnist-train-589745c459-bx6pb   2/2       Running   0          3m        10.44.0.4   wombat41
+emnist-train-589745c459-pdx5d   2/2       Running   0          3m        10.44.0.2   wombat41
+emnist-train-589745c459-pzdvz   2/2       Running   0          3m        10.36.0.4   wombat42
+Iterations: 18 Time: 1450.9310162067413 Name: emnist-train-589745c459-pdx5d
+
+Round number 2
+emnist-train-6b4b6c8dd-2g2mh    2/2       Running   0          3m        10.36.0.3   wombat42
+emnist-train-6b4b6c8dd-n7dkm    2/2       Running   0          3m        10.32.0.9   wombat40
+emnist-train-6b4b6c8dd-tfpdr    2/2       Running   0          3m        10.44.0.1   wombat41
+Iterations: 18 Time: 564.0321614742279 Name: emnist-train-6b4b6c8dd-2g2mh
+
+Round number 3
+emnist-train-7846b9b68d-7tbwb   2/2       Running   0          3m        10.44.0.4   wombat41
+emnist-train-7846b9b68d-jcpvv   2/2       Running   0          3m        10.44.0.2   wombat41
+emnist-train-7846b9b68d-qpsrj   2/2       Running   0          3m        10.36.0.4   wombat42
+Iterations: 18 Time: 1446.9983360767365 Name: emnist-train-7846b9b68d-7tbwb
+
+Round number 4
+emnist-train-5dc78d597c-57pnz   2/2       Running   0          3m        10.36.0.3   wombat42
+emnist-train-5dc78d597c-cbs92   2/2       Running   0          2m        10.44.0.1   wombat41
+emnist-train-5dc78d597c-zt866   2/2       Running   0          3m        10.32.0.9   wombat40
+Iterations: 18 Time: 1463.4012079238892 Name: emnist-train-5dc78d597c-zt866
+
+Round number 5
+emnist-train-7d8869f564-m9bzl   2/2       Running   0          2m        10.44.0.4   wombat41
+emnist-train-7d8869f564-n6q9g   2/2       Running   0          3m        10.36.0.4   wombat42
+emnist-train-7d8869f564-tzr2c   2/2       Running   0          3m        10.44.0.2   wombat41
+Iterations: 18 Time: 1465.229160308838 Name: emnist-train-7d8869f564-m9bzl
+
+
+Filename: emnist643.yml
+      batch_size: 64
+      number_of_workers: 3
+
+Round number 1
+emnist-train-7bc58bd688-87dp5   2/2       Running   0          3m        10.32.0.9   wombat40
+emnist-train-7bc58bd688-fdsw8   2/2       Running   0          2m        10.44.0.1   wombat41
+emnist-train-7bc58bd688-wvp9g   2/2       Running   0          3m        10.36.0.3   wombat42
+Iterations: 46 Time: 1443.3387792110443 Name: emnist-train-7bc58bd688-fdsw8
+Iterations: 27 Time: 1471.720134973526 Name: emnist-train-7bc58bd688-wvp9g
+Iterations: 29 Time: 1473.7605502605438 Name: emnist-train-7bc58bd688-wvp9g
+
+Round number 2
+emnist-train-68957f5db9-2khdt   2/2       Running   0          2m        10.44.0.4   wombat41
+emnist-train-68957f5db9-j45km   2/2       Running   0          3m        10.36.0.4   wombat42
+emnist-train-68957f5db9-mxm8t   2/2       Running   0          3m        10.44.0.2   wombat41
+Iterations: 38 Time: 3664.8271770477295 Name: emnist-train-68957f5db9-2khdt
+Iterations: 37 Time: 3634.9433810710907 Name: emnist-train-68957f5db9-mxm8t
+Iterations: 34 Time: 3638.751151561737 Name: emnist-train-68957f5db9-mxm8t
+
+Round number 3
+emnist-train-7585f749f4-7zlk8   2/2       Running   0          3m        10.32.0.9   wombat40
+emnist-train-7585f749f4-cs7fq   2/2       Running   0          2m        10.44.0.1   wombat41
+emnist-train-7585f749f4-pzsvq   2/2       Running   0          3m        10.36.0.3   wombat42
+Iterations: 38 Time: 2800.5601449012756 Name: emnist-train-7585f749f4-7zlk8
+Iterations: 39 Time: 2836.985467195511 Name: emnist-train-7585f749f4-7zlk8
+Iterations: 47 Time: 2799.2124576568604 Name: emnist-train-7585f749f4-cs7fq
+
+Round number 4
+emnist-train-54b64b57ff-hbnx6   2/2       Running   0          2m        10.44.0.4   wombat41
+emnist-train-54b64b57ff-r5jsf   2/2       Running   0          3m        10.44.0.2   wombat41
+emnist-train-54b64b57ff-tcqtv   2/2       Running   0          3m        10.36.0.4   wombat42
+Iterations: 46 Time: 1436.9202036857605 Name: emnist-train-54b64b57ff-r5jsf
+Iterations: 29 Time: 1441.343499660492 Name: emnist-train-54b64b57ff-tcqtv
+Iterations: 29 Time: 1444.8205914497375 Name: emnist-train-54b64b57ff-tcqtv
+
+Round number 5
+emnist-train-68b54669c5-rbfqd   2/2       Running   0          3m        10.36.0.3   wombat42
+emnist-train-68b54669c5-tg7jq   2/2       Running   0          3m        10.32.0.9   wombat40
+emnist-train-68b54669c5-vbp2b   2/2       Running   0          3m        10.44.0.1   wombat41
+Iterations: 38 Time: 2794.1703367233276 Name: emnist-train-68b54669c5-tg7jq
+Iterations: 39 Time: 2820.1212356090546 Name: emnist-train-68b54669c5-tg7jq
+Iterations: 48 Time: 2831.673974752426 Name: emnist-train-68b54669c5-vbp2b
+
+
+Filename: emnist646.yml
+      batch_size: 64
+      number_of_workers: 6
+
+Round number 1
+emnist-train-686b7b9cbc-bqsc8   2/2       Running   0          3m        10.44.0.4   wombat41
+emnist-train-686b7b9cbc-gxx49   2/2       Running   0          3m        10.44.0.2   wombat41
+emnist-train-686b7b9cbc-tjzbb   2/2       Running   0          3m        10.36.0.4   wombat42
+Iterations: 26 Time: 2545.7038028240204 Name: emnist-train-686b7b9cbc-bqsc8
+Iterations: 24 Time: 2569.763249874115 Name: emnist-train-686b7b9cbc-bqsc8
+Iterations: 27 Time: 2573.7340223789215 Name: emnist-train-686b7b9cbc-bqsc8
+Iterations: 73 Time: 2553.55184006691 Name: emnist-train-686b7b9cbc-gxx49
+Iterations: 62 Time: 2533.065128326416 Name: emnist-train-686b7b9cbc-tjzbb
+Iterations: 61 Time: 2540.1084711551666 Name: emnist-train-686b7b9cbc-tjzbb
+
+Round number 2
+emnist-train-5d4b5d8c8b-924mt   2/2       Running   0          2m        10.44.0.1   wombat41
+emnist-train-5d4b5d8c8b-d6fn9   2/2       Running   0          3m        10.36.0.3   wombat42
+emnist-train-5d4b5d8c8b-kxzb5   2/2       Running   0          3m        10.32.0.9   wombat40
+Iterations: 63 Time: 2456.4384870529175 Name: emnist-train-5d4b5d8c8b-d6fn9
+Iterations: 60 Time: 2460.2369890213013 Name: emnist-train-5d4b5d8c8b-d6fn9
+Iterations: 36 Time: 2449.6552698612213 Name: emnist-train-5d4b5d8c8b-kxzb5
+Iterations: 39 Time: 2458.6484713554382 Name: emnist-train-5d4b5d8c8b-kxzb5
+Iterations: 40 Time: 2472.2747769355774 Name: emnist-train-5d4b5d8c8b-kxzb5
+Iterations: 42 Time: 2478.7324872016907 Name: emnist-train-5d4b5d8c8b-kxzb5
+
+Round number 3
+emnist-train-746bf74ddf-5w98j   2/2       Running   0          3m        10.44.0.4   wombat41
+emnist-train-746bf74ddf-9qwtb   2/2       Running   0          3m        10.36.0.4   wombat42
+emnist-train-746bf74ddf-cl4t5   2/2       Running   0          3m        10.44.0.2   wombat41
+Iterations: 43 Time: 2393.782838344574 Name: emnist-train-746bf74ddf-5w98j
+Iterations: 49 Time: 2373.040322303772 Name: emnist-train-746bf74ddf-9qwtb
+Iterations: 48 Time: 2376.7044067382812 Name: emnist-train-746bf74ddf-9qwtb
+Iterations: 48 Time: 2381.2289142608643 Name: emnist-train-746bf74ddf-9qwtb
+Iterations: 39 Time: 2389.5268425941467 Name: emnist-train-746bf74ddf-cl4t5
+Iterations: 45 Time: 2390.6202976703644 Name: emnist-train-746bf74ddf-cl4t5
+
+Round number 4
+emnist-train-6f87595645-rkh7z   2/2       Running   0          3m        10.32.0.9   wombat40
+emnist-train-6f87595645-wzg6q   2/2       Running   0          3m        10.36.0.3   wombat42
+emnist-train-6f87595645-xqbfx   2/2       Running   0          2m        10.44.0.1   wombat41
+Iterations: 79 Time: 2163.7527389526367 Name: emnist-train-6f87595645-rkh7z
+Iterations: 43 Time: 2186.2445874214172 Name: emnist-train-6f87595645-wzg6q
+Iterations: 43 Time: 2188.2895019054413 Name: emnist-train-6f87595645-wzg6q
+Iterations: 45 Time: 2193.4323585033417 Name: emnist-train-6f87595645-wzg6q
+Iterations: 40 Time: 2160.4639661312103 Name: emnist-train-6f87595645-xqbfx
+Iterations: 42 Time: 2163.8084671497345 Name: emnist-train-6f87595645-xqbfx
+
+Round number 5
+emnist-train-87b75648f-fxrx4   2/2       Running   0          3m        10.36.0.4   wombat42
+emnist-train-87b75648f-k58jn   2/2       Running   0          3m        10.44.0.2   wombat41
+emnist-train-87b75648f-ttvlq   2/2       Running   0          3m        10.44.0.4   wombat41
+Iterations: 49 Time: 2330.636018037796 Name: emnist-train-87b75648f-fxrx4
+Iterations: 46 Time: 2345.958815097809 Name: emnist-train-87b75648f-fxrx4
+Iterations: 51 Time: 2345.775903701782 Name: emnist-train-87b75648f-fxrx4
+Iterations: 39 Time: 2321.617254257202 Name: emnist-train-87b75648f-k58jn
+Iterations: 37 Time: 2327.0431277751923 Name: emnist-train-87b75648f-k58jn
+Iterations: 44 Time: 2318.2615809440613 Name: emnist-train-87b75648f-ttvlq
