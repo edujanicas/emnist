@@ -90,8 +90,11 @@ The full set of results is available in the `test` folder.
 ## Branches
 
 The branch naming follows the convention name `algotithmName_databaseType_args_type`, where `algorithm` might be DownpourSDG, `databaseType` global or local (with synchronization in the background) and `args` can be the nFetch or nPull parameters. The types are the following:
-    1. _Single function training_ means that a single function is responsible for loading the data, initialising and training the network.
+
+1. _Single function training_ means that a single function is responsible for loading the data, initialising and training the network.
 
 The remaining need 2 different functions deployed on OpenFaaS. A _setup_ function that initialises the network and the state, and then calls a _train_ function, that trains the network with the data.
-   2. _One function per iteration_ means that each iteration of SGD is run in a separate function. If the training takes 50 iterations, at the end of each iteration the _train_ function requests the gateway to schedule the next invocation of the function. If the data is divided into M parts, each of the parts executes one function per iteration.
-   3. _Setup + loop in one function_ means that the entire training (all iterations) are run in a single function. The _setup_ function initialises the network and then calls M _train_ functions depending on the number of machines in the cluster.
+
+2. _One function per iteration_ means that each iteration of SGD is run in a separate function. If the training takes 50 iterations, at the end of each iteration the _train_ function requests the gateway to schedule the next invocation of the function. If the data is divided into M parts, each of the parts executes one function per iteration.
+
+3. _Setup + loop in one function_ means that the entire training (all iterations) are run in a single function. The _setup_ function initialises the network and then calls M _train_ functions depending on the number of machines in the cluster.
