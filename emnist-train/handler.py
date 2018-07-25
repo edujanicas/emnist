@@ -11,19 +11,92 @@ from pymemcache.client import base
 
 
 def tanh(x):
+    """Compute hyperbolic tangent element-wise.
+
+    Args:
+        x (array_like): Input array.
+
+    Returns:
+        ndarray: The corresponding hyperbolic tangent values.
+    """
     return np.tanh(x)
 
 
-def tanh2deriv(output):
-    return 1 - (output**2)
+def tanh2deriv(x):
+    """Compute hyperbolic tangent derivative element-wise.
+
+    Args:
+        x (array_like): Input array.
+
+    Returns:
+        ndarray: The corresponding hyperbolic tangent derivative values.
+    """
+    return 1 - (x**2)
 
 
 def softmax(x):
+    """Computes softmax activations.
+
+    Args:
+        x (array_like): Input array.
+
+    Returns:
+        ndarray: The corresponding softmax values.
+    """
     temp = np.exp(x)
     return temp / np.sum(temp, axis=1, keepdims=True)
 
 
+def stateful(arg1, arg2):
+    """Decorator to load and persist values of lambda function.
+
+    Args:
+        arg1 (string): Name of the first value to R/W.
+        arg2 (string): Name of the second value to R/W.
+
+    Returns:
+        wrap(f): A function used to wrap the function to be decorated.
+    """
+
+    def wrap(f):
+        # Everything before decoration happens here
+        client = base.Client((os.getenv("MEMCACHED_SERVICE_HOST"),
+                              int(os.getenv("MEMCACHED_SERVICE_PORT"))))
+
+        def wrapped_f(*args):
+            # After decoration
+            # Before function
+            weights_0_1 = client.get(arg1)
+            weights_1_2 = client.get(arg2)
+
+            correct_cnt, layer_0, layer_1, weights_0_1, weights_1_2 = f(
+                *args, weights_0_1, weights_1_2)
+
+            # After function
+            client.set('weights_0_1', weights_0_1.tobytes(), noreply=True)
+            client.set('weights_1_2', weights_1_2.tobytes(), noreply=True)
+
+            return correct_cnt, layer_0, layer_1, weights_0_1, weights_1_2
+
+        return wrapped_f
+
+    return wrap
+
+
 def load_dataset(worker_id, number_of_workers):
+    """Load emnist-bymerge dataset from disk and parse it.
+
+    Args:
+        worker_id (int): ID of the current worker loading the dataset.
+        number_of_workers (int):
+            Total number of workers working with the dataset.
+
+    Returns:
+        images (nparray): The array of train images in the dataset
+        labels (nparray): The corresponding train labels
+        test_images (nparray): The array of test images in the dataset
+        test_labels (nparray): The corresponding test labels
+    """
     dirname = os.path.dirname(__file__)
     path = os.path.join(dirname, 'data', 'emnist-bymerge.mat')
     emnist = spio.loadmat(path)
@@ -59,18 +132,44 @@ def load_dataset(worker_id, number_of_workers):
     return images, labels, test_images, test_labels
 
 
-def train_minibatch(i, client, pixels_per_image, hidden_size, num_labels,
+@stateful('weights_0_1', 'weights_1_2')
+def train_minibatch(i, pixels_per_image, hidden_size, num_labels,
                     batch_size, images, dropout_percent, correct_cnt, labels,
-                    alpha, weights_0_1, weights_1_2):
+                    alpha, *args):
+    """Train a minibatch of data with SGD.
 
-    if i % 10 == 0:
-        weights_0_1 = np.frombuffer(client.get('weights_0_1')).reshape(
-            pixels_per_image, hidden_size)
-        weights_1_2 = np.frombuffer(client.get('weights_1_2')).reshape(
-            hidden_size, num_labels)
+    Args:
+        i (int): number of the current minibatch
+        pixels_per_image (int): number of pixels in each image
+        hidden_size (int): size of the hidden layer of the network
+        num_labels (int):
+            total number of possible classifications of the dataset
+        batch_size (int): size of each minibatch (number of images)
+        images (nparray): array of train images
+        dropout_percent (float):
+            percentage of parameters ignored at the current stage
+        correct_cnt (int):
+            number of correct classifications so far in the training
+        labels (nparray): array of train labels
+        alpha (int): alpha value for the SGD algorithm
+        *args: Variable length argument list,
+            one for each variable in the decorator.
 
-        weights_0_1.flags.writeable = True
-        weights_1_2.flags.writeable = True
+    Returns:
+        correct_cnt, layer_0, layer_1, weights_0_1, weights_1_2
+        correct_cnt (int):
+            number of correct classifications so far in the training
+        layer_0 (nparray): zero-th layer of the current network
+        layer_1 (nparray): first layer of the current network
+        weights_0_1 (nparray): value of the parameters between layer 0 and 1
+        weights_1_2 (nparray): value of the parameters between layer 1 and 2
+    """
+    # *args will be weights_0_1 and weights_1_2 from the decorator
+    weights_0_1 = np.frombuffer(args[0]).reshape(pixels_per_image, hidden_size)
+    weights_1_2 = np.frombuffer(args[1]).reshape(hidden_size, num_labels)
+
+    weights_0_1.flags.writeable = True
+    weights_1_2.flags.writeable = True
 
     batch_start, batch_end = ((i * batch_size), ((i + 1) * batch_size))
     # 2. PREDICT & COMPARE: Make a Prediction,
@@ -99,14 +198,12 @@ def train_minibatch(i, client, pixels_per_image, hidden_size, num_labels,
     weights_1_2 += alpha * layer_1.T.dot(layer_2_delta)
     weights_0_1 += alpha * layer_0.T.dot(layer_1_delta)
 
-    client.set('weights_0_1', weights_0_1.tobytes(), noreply=True)
-    client.set('weights_1_2', weights_1_2.tobytes(), noreply=True)
-
     return correct_cnt, layer_0, layer_1, weights_0_1, weights_1_2
 
 
 def handle(req):
     """handle a request to the function
+
     Args:
         req (str): request body
     """
@@ -131,13 +228,6 @@ def handle(req):
     accuracy = float(client.get('accuracy%d'.format(worker_id)))
     iteration = int(client.get('iteration%d'.format(worker_id)))
 
-    weights_0_1 = np.frombuffer(client.get('weights_0_1')).reshape(
-        pixels_per_image, hidden_size)
-    weights_1_2 = np.frombuffer(client.get('weights_1_2')).reshape(
-        hidden_size, num_labels)
-    weights_0_1.flags.writeable = True
-    weights_1_2.flags.writeable = True
-
     # set the random seed
     np.random.seed(1)
 
@@ -154,9 +244,9 @@ def handle(req):
 
         for i in range(int(len(images) / batch_size)):
             correct_cnt, layer_0, layer_1, weights_0_1, weights_1_2 = train_minibatch(
-                i, client, pixels_per_image, hidden_size, num_labels,
+                i, pixels_per_image, hidden_size, num_labels,
                 batch_size, images, dropout_percent, correct_cnt, labels,
-                alpha, weights_0_1, weights_1_2)
+                alpha)
 
         test_correct_cnt = 0
         for i in range(len(test_images)):
