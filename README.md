@@ -43,19 +43,44 @@ To see the results of the training in the logs, run:
 $ for server in $(kubectl get pods --namespace=openfaas-fn -o wide | grep "emnist-train" | cut -d' ' -f1); do kubectl logs --namespace=openfaas-fn $server emnist-train; done
 ```
 
-### Setup + loop in one function (32 batch size, update before each mini-batch)
+The full stack of tests is available in the `tests` folder and can be run from with the `test.sh` script. To include a test on the current execution of `test.sh` the corresponding file from `tests` should be copied into the home file. Diferent files have different values of `batch_size` and `number_of_pods`. After the required tests are in the project folder, they can be run using:
+```bash
+$ nohup test.sh &
+```
+The outputs are saved in an `output.txt` file.
 
-|    N    |    Target-accuracy    |    Iterations    |    Time    |  
-| ----- | -------------------- | ------------- | -------------- |
-| 1        | 0.75                             | 5                    | 298 - 1567       |
-| 3        | 0.75                            | 3 - 15             | 541         |
-| 6        | 0.75                            | 9 - 23             | 1288      |
+### DownpoutSGD_global_client_nFetch10, 32 batch size, N = 1
 
-With N = 1, the time varies from 298s if the memcached pod is in the same machine that executes the function, or 1567s on a different machine.
+| Round | Time (s)  | Iter  | 42 | 41 | 40 |
+| ----- | --------- | ----- | -- | -- | -- |
+| 1     | 1415      | 5     |    |    | 1  |
+| 2     | 209       | 5     |  1 |    |    |
+| 3     | 770       | 5     |    | 1  |    |
+| 4     | 768       | 5     |    | 1  |    |
+| 5     | 210       | 5     |  1 |    |    |
+|       |           |       |    |    |    |
+| Avg   | 674       | 5     |    |    |    |
+| Stdev | 499       | 0     |    |    |    |
 
-### Setup + loop in one function (100 batch size)
-|    N    |    Target-accuracy    |    Iterations    |    Time    |  
-| ----- | -------------------- | ------------- | --------- |
-| 1        | 0.75                           | 44                  | 1430          |
-| 3        | 0.75                          | 41                   | 2496        |
-| 6        | 0.75                          |                       |                 |
+### DownpoutSGD_global_client_nFetch10, 32 batch size, N = 3
+
+| Round | Time (s)  | Iter  | 42 | 41 | 40 |
+| ----- | --------- | ----- | -- | -- | -- |
+| 1     | 393       | 3     |    | 1  |    |
+|       | 394       | 3     |    | 1  |    |
+|       | 352       | 16    | 1  |    |    |
+| 2     | 620       | 11    |    |    | 1  |
+|       | 595       | 10    | 1  |    |    |
+|       | 597       | 9     | 1  |    |    |
+| 3     | 1914      | 11    |    | 1  |    |
+|       | 1963      | 11    |    | 1  |    |
+|       | 1964      | 13    |    | 2  |    |
+| 4     | 415       | 3     |    | 1  |    |
+|       | 415       | 3     |    | 1  |    |
+|       | 363       | 16    | 1  |    |    |
+| 5     | 355       | 17    | 1  |    |    |
+|       | 473       | 4     |    | 1  |    |
+|       | 474       | 4     |    | 1  |    |
+|       |           |       |    |    |    |
+| Avg   | 752       | 9     |    |    |    |
+| Stdev | 624       | 5     |    |    |    |
