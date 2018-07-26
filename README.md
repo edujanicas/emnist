@@ -98,3 +98,20 @@ The remaining need 2 different functions deployed on OpenFaaS. A _setup_ functio
 2. _One function per iteration_ means that each iteration of SGD is run in a separate function. If the training takes 50 iterations, at the end of each iteration the _train_ function requests the gateway to schedule the next invocation of the function. If the data is divided into M parts, each of the parts executes one function per iteration.
 
 3. _Setup + loop in one function_ means that the entire training (all iterations) are run in a single function. The _setup_ function initialises the network and then calls M _train_ functions depending on the number of machines in the cluster.
+
+Type 3 has the added benefits of natural scalability and fault tolerance.
+
+## Tasks
+
+- [x] Write a proper test suite to benchmark the system
+- [x] Find a bigger dataset, in the order of 1GB, and adjust it to this particular problem
+- [x] Explore data parallelism in the larger dataset, using the function parallelism native in OpenFaaS to parallelise separate batches of data (Average parameters)
+- [x] Adding a Redis / Memcached pod on the Kubernetes cluster. The data will start being stored and retrieved from this datastore rather than passing via HTTP requests
+- [x] Building a Python decorator that makes the database calls without the programmer having to hard code them
+- [x] Add affinity between the OpenFaaS and the Redis / Memcached pods to have the data used by an OpenFaaS worker stored in that same worker
+- [x] Explore data parallelism in the larger dataset, using the function parallelism native in OpenFaaS to parallelise separate batches of data (Downpour SGD)
+- [ ] Synchronize multiple memcached machines in the background
+- [ ] Update only the changed parameters in each minibatch
+- [ ] Add fault tolerance to the system
+- [ ] Repeat tests with more machines (Kubernetes scheduling problems)
+- [ ] Deal with specific bottlenecks of the system
