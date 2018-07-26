@@ -47,11 +47,10 @@ def softmax(x):
     return temp / np.sum(temp, axis=1, keepdims=True)
 
 
-def stateful(arg1, arg2):
+def stateful(*decorator_args):
     """Decorator to load and persist values of lambda function.
     Args:
-        arg1 (string): Name of the first value to R/W.
-        arg2 (string): Name of the second value to R/W.
+        decorator_args (list(str)): Name of the values to R/W.
     Returns:
         wrap(f): A function used to wrap the function to be decorated.
     """
@@ -64,17 +63,22 @@ def stateful(arg1, arg2):
         def wrapped_f(*args):
             # After decoration
             # Before function
-            weights_0_1 = client.get(arg1)
-            weights_1_2 = client.get(arg2)
+            state = ()
 
-            correct_cnt, layer_0, layer_1, weights_0_1, weights_1_2 = f(
-                *args, weights_0_1, weights_1_2)
+            for arg in decorator_args:
+                state += (client.get(arg), )
+
+            # The last value returned by f should be the decorator_args
+            return_vals = f(*args, state)
 
             # After function
-            client.set('weights_0_1', weights_0_1.tobytes(), noreply=True)
-            client.set('weights_1_2', weights_1_2.tobytes(), noreply=True)
+            state = return_vals[-1]
+            i = 0
+            for arg in decorator_args:
+                client.set(arg, state[i].tobytes(), noreply=True)
+                i += 1
 
-            return correct_cnt, layer_0, layer_1, weights_0_1, weights_1_2
+            return return_vals
 
         return wrapped_f
 
@@ -133,7 +137,7 @@ def load_dataset(worker_id, number_of_workers):
 @stateful('weights_0_1', 'weights_1_2')
 def train_minibatch(i, pixels_per_image, hidden_size, num_labels, batch_size,
                     images, dropout_percent, correct_cnt, labels, alpha,
-                    *args):
+                    state):
     """Train a minibatch of data with SGD.
 
     Args:
@@ -150,7 +154,7 @@ def train_minibatch(i, pixels_per_image, hidden_size, num_labels, batch_size,
             number of correct classifications so far in the training
         labels (nparray): array of train labels
         alpha (int): alpha value for the SGD algorithm
-        *args: Variable length argument list,
+        state: Variable length argument list,
             one for each variable in the decorator.
 
     Returns:
@@ -163,8 +167,9 @@ def train_minibatch(i, pixels_per_image, hidden_size, num_labels, batch_size,
         weights_1_2 (nparray): value of the parameters between layer 1 and 2
     """
     # *args will be weights_0_1 and weights_1_2 from the decorator
-    weights_0_1 = np.frombuffer(args[0]).reshape(pixels_per_image, hidden_size)
-    weights_1_2 = np.frombuffer(args[1]).reshape(hidden_size, num_labels)
+    weights_0_1 = np.frombuffer(state[0]).reshape(pixels_per_image,
+                                                  hidden_size)
+    weights_1_2 = np.frombuffer(state[1]).reshape(hidden_size, num_labels)
 
     weights_0_1.flags.writeable = True
     weights_1_2.flags.writeable = True
@@ -196,7 +201,7 @@ def train_minibatch(i, pixels_per_image, hidden_size, num_labels, batch_size,
     weights_1_2 += alpha * layer_1.T.dot(layer_2_delta)
     weights_0_1 += alpha * layer_0.T.dot(layer_1_delta)
 
-    return correct_cnt, layer_0, layer_1, weights_0_1, weights_1_2
+    return correct_cnt, layer_0, layer_1, (weights_0_1, weights_1_2)
 
 
 def handle(req):
@@ -241,9 +246,13 @@ def handle(req):
         correct_cnt = 0
 
         for i in range(int(len(images) / batch_size)):
-            correct_cnt, layer_0, layer_1, weights_0_1, weights_1_2 = train_minibatch(
-                i, pixels_per_image, hidden_size, num_labels, batch_size,
-                images, dropout_percent, correct_cnt, labels, alpha)
+            correct_cnt, layer_0, layer_1, (weights_0_1,
+                                            weights_1_2) = train_minibatch(
+                                                i, pixels_per_image,
+                                                hidden_size, num_labels,
+                                                batch_size, images,
+                                                dropout_percent, correct_cnt,
+                                                labels, alpha)
 
         test_correct_cnt = 0
         for i in range(len(test_images)):
