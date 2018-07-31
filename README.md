@@ -110,9 +110,9 @@ Type 3 has the added benefits of natural scalability and fault tolerance.
 - [x] Building a Python decorator that makes the database calls without the programmer having to hard code them
 - [x] Add affinity between the OpenFaaS and the Redis / Memcached pods to have the data used by an OpenFaaS worker stored in that same worker
 - [x] Explore data parallelism in the larger dataset, using the function parallelism native in OpenFaaS to parallelise separate batches of data (Downpour SGD)
-- [ ] Synchronize multiple memcached machines in the background
+- [ ] Try the binary memcached protocol
 - [ ] Update only the changed parameters in each minibatch
-- [ ] Add fault tolerance to the system
+- [ ] Synchronize multiple memcached machines in the background
 - [ ] Repeat tests with more machines (Kubernetes scheduling problems)
 - [ ] Deal with specific bottlenecks of the system
 - [ ] Show some aditional use cases
