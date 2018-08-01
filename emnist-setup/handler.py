@@ -4,7 +4,7 @@ import requests
 import sys
 import time
 
-from pymemcache.client import base
+import bmemcached
 
 
 def handle(req):
@@ -18,8 +18,8 @@ def handle(req):
     np.random.seed(1)
 
     # get a connection to the memcached database
-    client = base.Client((os.getenv("MEMCACHED_SERVICE_HOST"),
-                          int(os.getenv("MEMCACHED_SERVICE_PORT"))))
+    client = bmemcached.Client((os.getenv("MEMCACHED_SERVICE_HOST"),
+                                int(os.getenv("MEMCACHED_SERVICE_PORT"))))
 
     # 1. Initialize the Network's Weights and Data
     # TODO: Switch values to become env vars

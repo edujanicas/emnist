@@ -7,7 +7,7 @@ from scipy import io as spio
 import keras
 import time
 
-from pymemcache.client import base
+import bmemcached
 
 
 def tanh(x):
@@ -57,8 +57,8 @@ def stateful(*decorator_args):
 
     def wrap(f):
         # Everything before decoration happens here
-        client = base.Client((os.getenv("MEMCACHED_SERVICE_HOST"),
-                              int(os.getenv("MEMCACHED_SERVICE_PORT"))))
+        client = bmemcached.Client((os.getenv("MEMCACHED_SERVICE_HOST"),
+                                    int(os.getenv("MEMCACHED_SERVICE_PORT"))))
 
         def wrapped_f(*args):
             # After decoration
@@ -75,7 +75,7 @@ def stateful(*decorator_args):
             state = return_vals[-1]
             i = 0
             for arg in decorator_args:
-                client.set(arg, state[i].tobytes(), noreply=True)
+                client.set(arg, state[i].tobytes())
                 i += 1
 
             return return_vals
@@ -212,8 +212,8 @@ def handle(req):
     """
     # Print next line for debug only
     # sys.stderr.write(str(os.environ))
-    client = base.Client((os.getenv("MEMCACHED_SERVICE_HOST"),
-                          int(os.getenv("MEMCACHED_SERVICE_PORT"))))
+    client = bmemcached.Client((os.getenv("MEMCACHED_SERVICE_HOST"),
+                                int(os.getenv("MEMCACHED_SERVICE_PORT"))))
 
     # get the query string from the http request
     qs = parse_qs(os.getenv("Http_Query"))

@@ -3,4 +3,4 @@ scipy
 requests
 keras
 tensorflow
-pymemcache
+python-binary-memcached
