@@ -7,7 +7,7 @@ from scipy import io as spio
 import keras
 import time
 
-import bmemcached
+import pylibmc
 
 
 def tanh(x):
@@ -57,14 +57,18 @@ def stateful(*decorator_args):
 
     def wrap(f):
         # Everything before decoration happens here
-        client = bmemcached.Client((os.getenv("MEMCACHED_SERVICE_HOST"),
-                                    int(os.getenv("MEMCACHED_SERVICE_PORT"))))
+        client = pylibmc.Client(
+            ['146.179.131.181:11211'],
+            binary=True,
+            behaviors={
+                "tcp_nodelay": True,
+                "ketama": True
+            })
 
         def wrapped_f(*args):
             # After decoration
             # Before function
             state = ()
-
             for arg in decorator_args:
                 state += (client.get(arg), )
 
@@ -212,8 +216,13 @@ def handle(req):
     """
     # Print next line for debug only
     # sys.stderr.write(str(os.environ))
-    client = bmemcached.Client((os.getenv("MEMCACHED_SERVICE_HOST"),
-                                int(os.getenv("MEMCACHED_SERVICE_PORT"))))
+    client = pylibmc.Client(
+        ['146.179.131.181:11211'],
+        binary=True,
+        behaviors={
+            "tcp_nodelay": True,
+            "ketama": True
+        })
 
     # get the query string from the http request
     qs = parse_qs(os.getenv("Http_Query"))
@@ -228,8 +237,8 @@ def handle(req):
     number_of_workers = int(client.get('number_of_workers'))
     worker_id = int(qs["worker_id"][0])
 
-    accuracy = float(client.get('accuracy%d'.format(worker_id)))
-    iteration = int(client.get('iteration%d'.format(worker_id)))
+    accuracy = float(client.get('accuracy' + str(worker_id)))
+    iteration = int(client.get('iteration' + str(worker_id)))
 
     # set the random seed
     np.random.seed(1)
@@ -265,8 +274,8 @@ def handle(req):
         accuracy = test_correct_cnt / float(len(test_images))
         iteration += 1
 
-        client.set('accuracy%d'.format(worker_id), accuracy)
-        client.set('iteration%d'.format(worker_id), iteration)
+        client.set('accuracy' + str(worker_id), accuracy)
+        client.set('iteration' + str(worker_id), iteration)
 
         # uses a default of "gateway" for when "gateway_hostname" is not set
         gateway_hostname = os.getenv("gateway_hostname", "gateway")

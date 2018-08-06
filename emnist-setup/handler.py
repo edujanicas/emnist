@@ -4,7 +4,7 @@ import requests
 import sys
 import time
 
-import bmemcached
+import pylibmc
 
 
 def handle(req):
@@ -18,8 +18,13 @@ def handle(req):
     np.random.seed(1)
 
     # get a connection to the memcached database
-    client = bmemcached.Client((os.getenv("MEMCACHED_SERVICE_HOST"),
-                                int(os.getenv("MEMCACHED_SERVICE_PORT"))))
+    client = pylibmc.Client(
+        ['146.179.131.181:11211'],
+        binary=True,
+        behaviors={
+            "tcp_nodelay": True,
+            "ketama": True
+        })
 
     # 1. Initialize the Network's Weights and Data
     # TODO: Switch values to become env vars
@@ -55,8 +60,8 @@ def handle(req):
     for worker_id in range(number_of_workers):
         # set the variables to send to the first iteration of the training loop
         payload = {'worker_id': worker_id}
-        client.set('accuracy%d'.format(worker_id), 0)
-        client.set('iteration%d'.format(worker_id), 1)
+        client.set('accuracy' + str(worker_id), 0)
+        client.set('iteration' + str(worker_id), 1)
         # make the request to call the emnist-train function HACKY timeout
         try:
             requests.get(
