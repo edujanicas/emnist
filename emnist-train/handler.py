@@ -58,7 +58,7 @@ def stateful(*decorator_args):
     def wrap(f):
         # Everything before decoration happens here
         client = pylibmc.Client(
-            ['146.179.131.181:11211'],
+            ['localhost:11211'],
             binary=True,
             behaviors={
                 "tcp_nodelay": True,
@@ -71,6 +71,7 @@ def stateful(*decorator_args):
             state = ()
             for arg in decorator_args:
                 state += (client.get(arg), )
+                timestamp = int(client.get(arg + '_t'))
 
             # The last value returned by f should be the decorator_args
             return_vals = f(*args, state)
@@ -80,6 +81,8 @@ def stateful(*decorator_args):
             i = 0
             for arg in decorator_args:
                 client.set(arg, state[i].tobytes())
+                timestamp += 1
+                client.set(arg + '_t', timestamp)
                 i += 1
 
             return return_vals
@@ -216,8 +219,16 @@ def handle(req):
     """
     # Print next line for debug only
     # sys.stderr.write(str(os.environ))
-    client = pylibmc.Client(
-        ['146.179.131.181:11211'],
+    g_client = pylibmc.Client(
+        ['146.179.131.184:11211'],
+        binary=True,
+        behaviors={
+            "tcp_nodelay": True,
+            "ketama": True
+        })
+
+    l_client = pylibmc.Client(
+        ['localhost:11211'],
         binary=True,
         behaviors={
             "tcp_nodelay": True,
@@ -228,17 +239,27 @@ def handle(req):
     qs = parse_qs(os.getenv("Http_Query"))
 
     # receives the parameters needed for the training
-    alpha = float(client.get('alpha'))
-    hidden_size = int(client.get('hidden_size'))
-    pixels_per_image = int(client.get('pixels_per_image'))
-    num_labels = int(client.get('num_labels'))
-    batch_size = int(client.get('batch_size'))
-    dropout_percent = float(client.get('dropout_percent'))
-    number_of_workers = int(client.get('number_of_workers'))
+    alpha = float(g_client.get('alpha'))
+    hidden_size = int(g_client.get('hidden_size'))
+    pixels_per_image = int(g_client.get('pixels_per_image'))
+    num_labels = int(g_client.get('num_labels'))
+    batch_size = int(g_client.get('batch_size'))
+    dropout_percent = float(g_client.get('dropout_percent'))
+    number_of_workers = int(g_client.get('number_of_workers'))
     worker_id = int(qs["worker_id"][0])
 
-    accuracy = float(client.get('accuracy' + str(worker_id)))
-    iteration = int(client.get('iteration' + str(worker_id)))
+    accuracy = float(g_client.get('accuracy' + str(worker_id)))
+    iteration = int(g_client.get('iteration' + str(worker_id)))
+
+    l_client.set('weights_0_1_t', 0)
+    l_client.set('weights_1_2_t', 0)
+
+    weights_0_1 = 0.02 * np.random.random(
+            (pixels_per_image, hidden_size)) - 0.01
+    weights_1_2 = 0.2 * np.random.random((hidden_size, num_labels)) - 0.1
+
+    l_client.set('weights_0_1', weights_0_1.tobytes())
+    l_client.set('weights_1_2', weights_1_2.tobytes())
 
     # set the random seed
     np.random.seed(1)
@@ -274,8 +295,8 @@ def handle(req):
         accuracy = test_correct_cnt / float(len(test_images))
         iteration += 1
 
-        client.set('accuracy' + str(worker_id), accuracy)
-        client.set('iteration' + str(worker_id), iteration)
+        g_client.set('accuracy' + str(worker_id), accuracy)
+        g_client.set('iteration' + str(worker_id), iteration)
 
         # uses a default of "gateway" for when "gateway_hostname" is not set
         gateway_hostname = os.getenv("gateway_hostname", "gateway")
@@ -291,7 +312,7 @@ def handle(req):
             pass
 
     else:
-        start = float(client.get('start'))
+        start = float(g_client.get('start'))
         end = time.time()
         sys.stderr.write("\n" + "Worker ID: " + str(worker_id) +
                          " Iterations: " + str(iteration) + " Time: " +

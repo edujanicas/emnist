@@ -20,8 +20,8 @@ functions:
       pixels_per_image: 784
       num_labels: 47
       dropout_percent: 0.2
-      batch_size: 32
-      number_of_workers: 3
+      batch_size: 128
+      number_of_workers: 2
   emnist-train:
     lang: python3-debian
     handler: ./emnist-train

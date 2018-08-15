@@ -19,7 +19,7 @@ def handle(req):
 
     # get a connection to the memcached database
     client = pylibmc.Client(
-        ['146.179.131.181:11211'],
+        ['146.179.131.184:11211'],
         binary=True,
         behaviors={
             "tcp_nodelay": True,
@@ -42,8 +42,10 @@ def handle(req):
         (pixels_per_image, hidden_size)) - 0.01
     weights_1_2 = 0.2 * np.random.random((hidden_size, num_labels)) - 0.1
 
-    client.set('weights_0_1', weights_0_1.tobytes())
-    client.set('weights_1_2', weights_1_2.tobytes())
+    client.set('weights_0_1', 0)
+    client.set('weights_1_2', 0)
+    client.set('weights_0_1_t', 0)
+    client.set('weights_1_2_t', 0)
     client.set('updated', 0)
     client.set('alpha', alpha)
     client.set('hidden_size', hidden_size)
