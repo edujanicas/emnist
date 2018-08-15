@@ -6,7 +6,7 @@ for f in emnist*.yml; do
     cat $f | grep "number_of_workers" >> output.txt
     echo "" >> output.txt
 
-    for i in {1..5}
+    for i in {1..3}
     do
         echo "Round number" $i >> output.txt
         # Build and deploy the function to launch new pods
@@ -24,9 +24,9 @@ for f in emnist*.yml; do
         # If all the pods terminated the execution, there are number of processes lines in the logs command with the word "Time" in it
         # Timeout after 2 hours, in case something wrong happens
         START=`date +%s`
-        while [ $(( $(date +%s) - 7200 )) -lt $START ]; do
+        while [ $(( $(date +%s) - 72000 )) -lt $START ]; do
             CMD1=$(for server in $(kubectl get pods --namespace=openfaas-fn -o wide | grep "emnist-train" | cut -d' ' -f1); do kubectl logs --namespace=openfaas-fn $server emnist-train; done | grep -c "Time")
-            CMD2=$(for server in $(kubectl get pods --namespace=openfaas-fn -o wide | grep "emnist-train" | cut -d' ' -f1); do kubectl logs --namespace=openfaas-fn $server emnist-train; done | grep -c "Forking fprocess")
+            CMD2=$(for server in $(kubectl get pods --namespace=openfaas-fn -o wide | grep "emnist-train" | cut -d' ' -f1); do kubectl logs --namespace=openfaas-fn $server emnist-train; done | grep -c "Worker")
             if [[ "$CMD1" = "$CMD2" ]]; then
                 for server in $(kubectl get pods --namespace=openfaas-fn -o wide | grep "emnist-train" | cut -d' ' -f1); do kubectl logs --namespace=openfaas-fn $server emnist-train; done | grep "Time" >> output.txt
                 break
