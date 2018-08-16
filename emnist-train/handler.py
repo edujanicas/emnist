@@ -220,7 +220,7 @@ def handle(req):
     # Print next line for debug only
     # sys.stderr.write(str(os.environ))
     g_client = pylibmc.Client(
-        ['146.179.131.184:11211'],
+        ['146.179.131.181:11211'],
         binary=True,
         behaviors={
             "tcp_nodelay": True,
@@ -251,15 +251,11 @@ def handle(req):
     accuracy = float(g_client.get('accuracy' + str(worker_id)))
     iteration = int(g_client.get('iteration' + str(worker_id)))
 
-    l_client.set('weights_0_1_t', 0)
-    l_client.set('weights_1_2_t', 0)
+    l_client.set('weights_0_1_t', g_client.get('weights_0_1_t'))
+    l_client.set('weights_1_2_t', g_client.get('weights_1_2_t'))
 
-    weights_0_1 = 0.02 * np.random.random(
-            (pixels_per_image, hidden_size)) - 0.01
-    weights_1_2 = 0.2 * np.random.random((hidden_size, num_labels)) - 0.1
-
-    l_client.set('weights_0_1', weights_0_1.tobytes())
-    l_client.set('weights_1_2', weights_1_2.tobytes())
+    l_client.set('weights_0_1', g_client.get('weights_0_1'))
+    l_client.set('weights_1_2', g_client.get('weights_1_2'))
 
     # set the random seed
     np.random.seed(1)
