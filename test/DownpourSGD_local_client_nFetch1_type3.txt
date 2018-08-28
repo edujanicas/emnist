@@ -1,0 +1,134 @@
+##################### CENTRAL SERVER; CACHE 1 MACHINES ########################
+Filename: emnist161.yml
+      batch_size: 16
+      number_of_workers: 1
+1 iteration: Duration: 82.106831 seconds
+Round number 1
+Worker ID: 0 Iterations: 3 Time: 167.74680352210999 Name: emnist-train-5d9488c954-gbbqp
+
+Filename: emnist321.yml
+      batch_size: 32
+      number_of_workers: 1
+
+1 iteration: Duration: 53.083848 seconds
+Round number 1
+Worker ID: 0 Iterations: 6 Time: 270.36246037483215 Name: emnist-train-b64f85c94-klch8
+
+Filename: emnist641.yml
+      batch_size: 64
+      number_of_workers: 1
+1 iteration: Duration: 40.026951 seconds
+Round number 1
+Worker ID: 0 Iterations: 19 Time: 717.7576305866241 Name: emnist-train-5cc5bd665d-bllwv
+
+Filename: emnist1281.yml
+      batch_size: 128
+      number_of_workers: 1
+1 iteration: Duration: 32.577860 seconds
+Round number 1
+Worker ID: 0 Iterations: 72 Time: 2348.623546600342 Name: emnist-train-7c7c499854-jxfw9
+
+
+##################### CENTRAL SERVER; CACHE 2 MACHINES ########################
+NOTE: BACKGROUND SYNC WITH MEMCACHED CENTRAL SERVER IN WORKING NODE CAUSES BIG BOTTLENECKS
+
+
+Filename: emnist162.yml
+      batch_size: 16
+      number_of_workers: 2
+1 iteration: Duration: 45.553029 seconds
+Round number 1
+Worker ID: 0 Iterations: 4 Time: 214.25164246559143 Name: emnist-train-7dd68976b7-sfvnk
+Worker ID: 1 Iterations: 4 Time: 212.36520504951477 Name: emnist-train-7dd68976b7-5rx9g
+
+Filename: emnist322.yml
+      batch_size: 32
+      number_of_workers: 2
+
+1 iteration: Duration: 32.610152 seconds
+Round number 1
+Worker ID: 0 Iterations: 9 Time: 424.66077733039856 Name: emnist-train-758f87b6c5-7ctf5
+Worker ID: 1 Iterations: 9 Time: 427.9899950027466 Name: emnist-train-758f87b6c5-7ctf5
+
+Filename: emnist642.yml
+      batch_size: 64
+      number_of_workers: 2
+1 iteration: Duration: 26.143517 seconds
+Round number 1
+Worker ID: 1 Iterations: 28 Time: 983.3913419246674 Name: emnist-train-58cf8cd454-lcx46
+Worker ID: 0 Iterations: 28 Time: 979.6438121795654 Name: emnist-train-58cf8cd454-lcx46
+
+Filename: emnist1282.yml
+      batch_size: 128
+      number_of_workers: 2
+1 iteration: Duration: 23.029584 seconds
+Round number 1
+Worker ID: 1 Iterations: 120 Time: 4242.921257972717 Name: emnist-train-7b65468c7d-d2ngz
+Worker ID: 0 Iterations: 119 Time: 4244.532079935074 Name: emnist-train-7b65468c7d-vzbvp
+
+
+##################### CENTRAL SERVER; CACHE 3 MACHINES ########################
+Filename: emnist163.yml
+      batch_size: 16
+      number_of_workers: 3
+1 iteration: Duration: 35.577205 seconds
+Round number 1
+Worker ID: 0 Iterations: 4 Time: 147.51852440834045 Name: emnist-train-87b4f666d-6246x
+Worker ID: 1 Iterations: 5 Time: 144.66478967666626 Name: emnist-train-87b4f666d-lxx7q
+Worker ID: 2 Iterations: 4 Time: 148.78672409057617 Name: emnist-train-87b4f666d-vgqhv
+
+Filename: emnist323.yml
+      batch_size: 32
+      number_of_workers: 3
+1 iteration: Duration: 26.044421 seconds
+Round number 1
+Worker ID: 0 Iterations: 11 Time: 339.55142641067505 Name: emnist-train-6cd9c54df4-hnchs
+Worker ID: 1 Iterations: 9 Time: 362.5065975189209 Name: emnist-train-6cd9c54df4-hnchs
+Worker ID: 2 Iterations: 9 Time: 367.5884828567505 Name: emnist-train-6cd9c54df4-dkfzn
+
+Filename: emnist643.yml
+      batch_size: 64
+      number_of_workers: 3
+1 iteration: Duration: 21.749789 seconds
+Round number 1
+Worker ID: 0 Iterations: 30 Time: 1017.6674733161926 Name: emnist-train-6f8db6ffbd-fwn8r
+Worker ID: 1 Iterations: 28 Time: 1001.636260509491 Name: emnist-train-6f8db6ffbd-rsbrp
+Worker ID: 2 Iterations: 30 Time: 998.0956130027771 Name: emnist-train-6f8db6ffbd-4gjhx
+
+Filename: emnist1283.yml
+      batch_size: 128
+      number_of_workers: 3
+1 iteration: Duration: 19.149400 seconds
+Round number 1
+Worker ID: 0 Iterations: 117 Time: 3719.972728252411 Name: emnist-train-5676df58-dc5l6
+Worker ID: 1 Iterations: 122 Time: 3704.604638338089 Name: emnist-train-5676df58-dc5l6
+Worker ID: 2 Iterations: 117 Time: 3782.851069688797 Name: emnist-train-5676df58-dc5l6
+
+
+##################### CENTRAL SERVER; CACHE 3 MACHINES ########################
+Filename: emnist164.yml
+      batch_size: 16
+      number_of_workers: 4
+1 iteration: Duration: seconds
+Round number 1
+
+
+Filename: emnist324.yml
+      batch_size: 32
+      number_of_workers: 4
+1 iteration: Duration: seconds
+Round number 1
+
+
+Filename: emnist644.yml
+      batch_size: 64
+      number_of_workers: 4
+1 iteration: Duration: seconds
+Round number 1
+
+
+Filename: emnist1284.yml
+      batch_size: 128
+      number_of_workers: 4
+1 iteration: Duration: 17.719354 seconds
+Round number 1
